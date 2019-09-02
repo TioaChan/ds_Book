@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -20,8 +22,8 @@ typedef struct {
 
 typedef struct LNode {
 	Book data; // 数据域
-	struct LNode *next; // 指针域
-} LNode,*LinkList;
+	struct LNode* next; // 指针域
+} LNode, * LinkList;
 // *LinkList为Lnode类型的指针
 
 struct Publisher {
@@ -38,57 +40,56 @@ struct Author {
 
 Status ClearList(LinkList L);
 Status DestoryList(LinkList L);
-Status GetElem(LinkList L,int i,Book *e);
-Status InitList(LNode **L);
-Status InitHeadNode(LNode *L);
-Status ListInsert(LNode *L,int i,Book e);
-Status SuperListInsert(LNode *L,const char* bookName,const char* no,float price);
+Status GetElem(LinkList L, int i, Book* e);
+Status InitList(LNode** L);
+Status InitHeadNode(LNode* L);
+Status ListInsert(LNode* L, int i, Book e);
+Status SuperListInsert(LNode* L, const char* bookName, const char* no, float price);
 
 int ListLength(LinkList L);
 int ListEmpty(LinkList L);
 
 void AccessNodesData(LNode* L);
-void BatchInsert(LNode *p);
-void CreateList_F(LinkList *L,int n);
+void BatchInsert(LNode* p);
+void CreateList_F(LinkList* L, int n);
 void JudgeResponseCode(Status ResponseCode);
-void Unit();
 
-Book BookFactory(const char*no,const char*bookName,const char*author,const char*publisher,float price){
+Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
 	Book book;
-	strcpy(book.no,no);
-	strcpy(book.bookName,bookName);
-	strcpy(book.author,author);
-	strcpy(book.publisher,publisher);
-	book.price=price;
+	strcpy(book.no, no);
+	strcpy(book.bookName, bookName);
+	strcpy(book.author, author);
+	strcpy(book.publisher, publisher);
+	book.price = price;
 	return book;
 }
 
 /*
  * 单链表初始化头节点
 */
-Status InitList(LNode **L) {
-	*L=(LNode*)malloc(sizeof(LNode));
-	if(*L==NULL) {
+Status InitList(LNode** L) {
+	*L = (LNode*)malloc(sizeof(LNode));
+	if (*L == NULL) {
 		printf("申请空间失败");
 	}
-	if(InitHeadNode(*L)==OK) {
-		cout<<"成功初始化头结点"<<endl<<endl;
+	if (InitHeadNode(*L) == OK) {
+		cout << "成功初始化头结点" << endl << endl;
 	}
-	(*L)->next=NULL;
+	(*L)->next = NULL;
 	return OK;
 }
 
 /*
  * 单链表初始化头节点
 */
-Status InitHeadNode(LNode *L) {
+Status InitHeadNode(LNode* L) {
 	Book BaseBookifm;
-	strcpy(BaseBookifm.no,"书号");
-	strcpy(BaseBookifm.bookName,"书名");
-	strcpy(BaseBookifm.author,"作者");
-	strcpy(BaseBookifm.publisher,"出版社");
-	BaseBookifm.price=0;
-	L->data=BaseBookifm;
+	strcpy(BaseBookifm.no, "书号");
+	strcpy(BaseBookifm.bookName, "书名");
+	strcpy(BaseBookifm.author, "作者");
+	strcpy(BaseBookifm.publisher, "出版社");
+	BaseBookifm.price = 0;
+	L->data = BaseBookifm;
 	// L->data=BaseBookifm
 	// 这里是直接赋值
 	return OK;
@@ -100,11 +101,11 @@ Status InitHeadNode(LNode *L) {
 int ListLength(LinkList L) {
 	// 返回L中元素个数
 	LinkList p;
-	p=L->next; // p指向第一个结点
-	int i=0;
-	while(p) { // 遍历单链表，统计结点数
+	p = L->next; // p指向第一个结点
+	int i = 0;
+	while (p) { // 遍历单链表，统计结点数
 		i++;
-		p=p->next;
+		p = p->next;
 	}
 	return i;
 }
@@ -112,11 +113,12 @@ int ListLength(LinkList L) {
 /*
  * 单链表是否为空
 */
-int ListEmpty(LNode *L) {
+int ListEmpty(LNode* L) {
 	// 若L为空表，  否则返回0
-	if(L->next) { // 非空
+	if (L->next) { // 非空
 		return 0;
-	} else {
+	}
+	else {
 		return 1;
 	}
 }
@@ -126,50 +128,51 @@ int ListEmpty(LNode *L) {
 */
 Status DestoryList(LinkList L) {
 	LinkList p;
-	while(L) {
-		p=L;
-		L=L->next;
+	while (L) {
+		p = L;
+		L = L->next;
 		free(p);
 	}
+	return OK;
 }
 
 Status ClearList(LinkList L) {
 	// 将L重置为空表
-	LinkList p,q;
-	p=L->next; // p指向第一个结点
-	while(p) {
-		q=p->next;
+	LinkList p, q;
+	p = L->next; // p指向第一个结点
+	while (p) {
+		q = p->next;
 		free(p);
-		p=q;
+		p = q;
 	}
-	L->next=NULL;
+	L->next = NULL;
 	return OK;
 }
 
-Status GetElem(LinkList L,int i,Book *e) {
-	LinkList p=L->next; // 跳过头节点
-	int j=1;
-	while(p&&j<i) { // 向后扫描，直到p指向第i个元素 或p为空
-		p=p->next;
+Status GetElem(LinkList L, int i, Book* e) {
+	LinkList p = L->next; // 跳过头节点
+	int j = 1;
+	while (p && j < i) { // 向后扫描，直到p指向第i个元素 或p为空
+		p = p->next;
 		++j;
 	}
-	if(!p||j>i)
+	if (!p || j > i)
 		return ERROR;
-	*e=p->data; // 取第i个元素
+	*e = p->data; // 取第i个元素
 	return OK;
 } // GetElem
 
-Status ListInsert(LNode *L,int i,Book e) {
-	LNode *p=L;
-	int j=0;
-	while(p&&j<i-1) {
-		p=p->next;
+Status ListInsert(LNode* L, int i, Book e) {
+	LNode* p = L;
+	int j = 0;
+	while (p && j < i - 1) {
+		p = p->next;
 		j++;  // 寻找i-1个结点
 	}
-	if(!p||j>i-1) {
+	if (!p || j > i - 1) {
 		return ERROR; //i大于表长+1或者小于1
 	}
-	LNode *Node=(LNode*)malloc(sizeof(LNode));
+	LNode* Node = (LNode*)malloc(sizeof(LNode));
 	//首先LNode是局部变量，在栈里，函数消亡的时候LNode也跟着消亡
 	// 所以不能LNode Node声明在函数里，然后让插入单链表中
 
@@ -180,60 +183,64 @@ Status ListInsert(LNode *L,int i,Book e) {
 	// 同时即将消亡的Node指针，因为及时的链接到了上一个节点指针上
 	// 因此得到了保留
 
-	Node->data=e;
-	Node->next=p->next;
-	p->next=Node;
+	Node->data = e;
+	Node->next = p->next;
+	p->next = Node;
 
-// ====================================
-//  以下为错误代码
-//	LNode N;
-//	LNode *q=&N;
-//	q->data=e;
-//	q->next=p->next;
-//	p->next=q;
-//	printf("%s",p->next->data.name);
-//	printf("%s",p->next->data.no);
-//	printf("%f",p->next->data.price);
-// ====================================
+	// ====================================
+	//  以下为错误代码
+	//	LNode N;
+	//	LNode *q=&N;
+	//	q->data=e;
+	//	q->next=p->next;
+	//	p->next=q;
+	//	printf("%s",p->next->data.name);
+	//	printf("%s",p->next->data.no);
+	//	printf("%f",p->next->data.price);
+	// ====================================
 	return OK;
 }
 
 /*
  * Super Insert
  */
-Status SuperListInsert(LNode *L,int i,const char* no,const char* bookName,const char* author,const char* publisher,float price) {
-	Book book=BookFactory(no,bookName,author,publisher,price);
-	if(ListInsert(L,i,book)==OK) {
+Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, const char* author, const char* publisher, float price) {
+	Book book = BookFactory(no, bookName, author, publisher, price);
+	if (ListInsert(L, i, book) == OK) {
 		return OK;
+	}
+	else
+	{
+		return ERROR;
 	}
 }
 
-Status ListDelete(LinkList L,int i) {
+Status ListDelete(LinkList L, int i) {
 	// 在带头结点的单链表，删除第i个元素
-	LNode *p=L;
-	int j=0;
-	while((p->next)&&(j<i-1)) { // 查找第i-1个结点，p指向该结点
-		p=p->next;
+	LNode* p = L;
+	int j = 0;
+	while ((p->next) && (j < i - 1)) { // 查找第i-1个结点，p指向该结点
+		p = p->next;
 		j++;
 	}
-	if(!(p->next)||(j>i-1)) {	// 当i>n或i<1时，删除位置不合理
+	if (!(p->next) || (j > i - 1)) {	// 当i>n或i<1时，删除位置不合理
 		return ERROR;
 	}
-	LNode* q=p->next;
-	p->next=q->next;
+	LNode* q = p->next;
+	p->next = q->next;
 	free(q);
 	return OK;
 }
 
 void AccessNodesData(LNode* L) {
-	LNode* p=L;
+	LNode* p = L;
 	printf("头节点信息为：\n");
-	printf("%-15s|%-15s|%-15s|%-15s|%-2.0f |\n",p->data.no,p->data.bookName,p->data.author,p->data.publisher,p->data.price);
-	p=p->next; // 跑出头节点
+	printf("%-15s|%-15s|%-15s|%-15s|%-2.0f |\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+	p = p->next; // 跑出头节点
 	do {
-		printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n",p->data.no,p->data.bookName,p->data.author,p->data.publisher,p->data.price);
-		p=p->next;
-	} while(p!=NULL); // !! 注意是p!=NULL 而不是p->next!=NULL
+		printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+		p = p->next;
+	} while (p != NULL); // !! 注意是p!=NULL 而不是p->next!=NULL
 }
 
 //void SortPublisher(LNode* L) {
@@ -274,63 +281,63 @@ void AccessNodesData(LNode* L) {
 //}
 
 void JudgeResponseCode(Status ResponseCode) {
-	switch(ResponseCode) {
-		case OK:
-			printf("Success\n");
-			break;
-		case ERROR:
-			printf("ERROR check your code!\n");
-			break;
-		case OVERFLOW:
-			printf("memory has OVERFLOW now\n");
-			break;
-		default:
-			printf("No ResponseCode\n");
-			break;
+	switch (ResponseCode) {
+	case OK:
+		printf("Success\n");
+		break;
+	case ERROR:
+		printf("ERROR check your code!\n");
+		break;
+	case OVERFLOW:
+		printf("memory has OVERFLOW now\n");
+		break;
+	default:
+		printf("No ResponseCode\n");
+		break;
 	}
 }
 
-void BatchInsert(LNode *p) {
+void BatchInsert(LNode* p) {
 	printf("==================================初始化数据=====================================\n");
-	JudgeResponseCode(SuperListInsert(p,1,"001","JAVA","张三","清华出版社",100.0));
-	JudgeResponseCode(SuperListInsert(p,2,"002","VUE.JS","李四","工业出版社",200.0));
-	JudgeResponseCode(SuperListInsert(p,3,"003","C++","王五","北大出版社",300.0));
-	JudgeResponseCode(SuperListInsert(p,4,"004","Asp.Net","赵六","高等教育出版社",660.0));
-	JudgeResponseCode(SuperListInsert(p,5,"005","计算机网络","小明","A出版社",780.0));
-	JudgeResponseCode(SuperListInsert(p,6,"006","计算机操作系统","小红","B出版社",120.0));
-	JudgeResponseCode(SuperListInsert(p,7,"007","数据结构","小蓝","郑大出版社",140.0));
-	JudgeResponseCode(SuperListInsert(p,8,"008","C++从入门到放弃","小智","河南工程出版社",180.0));
-	printf("当前一共有%d个数据\n",ListLength(p));
+	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "张三", "清华出版社", 100.0));
+	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "李四", "工业出版社", 200.0));
+	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "王五", "北大出版社", 300.0));
+	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "赵六", "高等教育出版社", 660.0));
+	JudgeResponseCode(SuperListInsert(p, 5, "005", "计算机网络", "小明", "A出版社", 780.0));
+	JudgeResponseCode(SuperListInsert(p, 6, "006", "计算机操作系统", "小红", "B出版社", 120.0));
+	JudgeResponseCode(SuperListInsert(p, 7, "007", "数据结构", "小蓝", "郑大出版社", 140.0));
+	JudgeResponseCode(SuperListInsert(p, 8, "008", "C++从入门到放弃", "小智", "河南工程出版社", 180.0));
+	printf("当前一共有%d个数据\n", ListLength(p));
 	printf("==================================初始化数据=====================================\n\n");
 }
 
 Status WriteStructToFile(LNode* L) {
-	LNode* p=L->next;
-	FILE * pf;
-	int count=0;
-	if((pf=(fopen(".\\a.dat","w+")))==0)
+	LNode* p = L->next;
+	FILE* pf;
+	int count = 0;
+	if ((pf = (fopen(".\\a.dat", "w+"))) == 0)
 		return ERROR;
-	while(p) {
-		fprintf(pf,"\n%s %s %s %s %f",p->data.no,p->data.bookName,p->data.author,p->data.publisher,p->data.price);
-		p=p->next;
+	while (p) {
+		fprintf(pf, "\n%s %s %s %s %f", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+		p = p->next;
 		count++;
 	}
-	cout<<"共有"<<count<<"条数据"<<endl;
+	cout << "共有" << count << "条数据" << endl;
 	fclose(pf);
 	return OK;
 }
 
 Status ReadStructFromFile(LNode* L) {
-	ClearList(L); 
-	FILE * pf;
-	if((pf=(fopen(".\\a.dat","r")))==0)
+	ClearList(L);
+	FILE* pf;
+	if ((pf = (fopen(".\\a.dat", "r"))) == 0)
 		return ERROR;
 	Book b;
-	int i=0;
-	while(!feof(pf)) {
-		int res=fscanf(pf,"%s%s%s%s%f",b.no,b.bookName,b.author,b.publisher,&b.price);
-		if(res==-1)break;
-		ListInsert(L,++i,b);
+	int i = 0;
+	while (!feof(pf)) {
+		int res = fscanf(pf, "%s%s%s%s%f", b.no, b.bookName, b.author, b.publisher, &b.price);
+		if (res == -1)break;
+		ListInsert(L, ++i, b);
 		// !Debug重要性
 	}
 	fclose(pf);
@@ -339,107 +346,105 @@ Status ReadStructFromFile(LNode* L) {
 
 Status AddNewBook(LNode* L) {
 	float price;
-	char no[50],name[50],au[50],pub[50];
-	LNode* p=L->next;
-	cout<<"请分别输入书号、书名、作者（1个）、出版社、价格五个部分"<<endl;
-	int length=ListLength(L);
-	cin>>no>>name>>au>>pub>>price;
-	Book e=BookFactory(no,name,au,pub,price);
-	for(int i=0; i<length-1; i++) {
-		p=p->next;
+	char no[50], name[50], au[50], pub[50];
+	LNode* p = L->next;
+	cout << "请分别输入书号、书名、作者（1个）、出版社、价格五个部分" << endl;
+	int length = ListLength(L);
+	cin >> no >> name >> au >> pub >> price;
+	Book e = BookFactory(no, name, au, pub, price);
+	for (int i = 0; i < length - 1; i++) {
+		p = p->next;
 	}
-	LNode* q=new LNode;
-	q->data=e;
-	p->next=q;
-	q->next=NULL;
+	LNode* q = new LNode;
+	q->data = e;
+	p->next = q;
+	q->next = NULL;
 	WriteStructToFile(L);
+	return OK;
 }
 
-void Unit_v3() {//初始化数据 
+void InitData() {//初始化数据 
 	//	LNode l;	  // LNode结构体
-	LNode *p;  // p为指向LNode的指针体
-	LNode **q=&p; // q指向指针的指针
-
+	LNode* p;  // p为指向LNode的指针体
+	LNode** q = &p; // q指向指针的指针
 	/* 初始化指针需要给入 指向指针的指针，通过指向指针的指针来改变指针的地址
 	 * 这里是通过二级指针传递
 	 */
 	InitList(q);
-
 	/*
 	 * 批量插入数据
 	 */
 	BatchInsert(p);
-	if(WriteStructToFile(p)==OK) {
-		cout<<"写入数据成功"<<endl;
+	if (WriteStructToFile(p) == OK) {
+		cout << "写入数据成功" << endl;
 	}
-	if(ReadStructFromFile(p)==OK) {
-		cout<<"读取数据成功"<<endl;
+	if (ReadStructFromFile(p) == OK) {
+		cout << "读取数据成功" << endl;
 	}
 	AccessNodesData(p);
 }
 
 void Console() {
-	cout<<"欢迎来到图书管理软件Ver1.0版本"<<endl;
+	cout << "欢迎来到图书管理软件Ver1.0版本" << endl;
 
-	LNode *p;  // p为指向LNode的指针体
-	LNode **q=&p; // q指向指针的指针
+	LNode* p;  // p为指向LNode的指针体
+	LNode** q = &p; // q指向指针的指针
 	InitList(q);
 	ReadStructFromFile(p);
-	while(1) {
-		int input=0;
-		cout<<"1.增加图书"<<
-		endl<<"2.修改图书信息"<<
-		endl<<"3.删除指定图书"<<
-		endl<<"4.按照书号查找"<<
-		endl<<"5.按照作者查找"<<
-		endl<<"6.按照价格范围查找"<<
-		endl<<"7.查找某个作者出版的所有信息，按价格升序输出 "<<
-		endl<<"8.书名模糊查找"<<
-		endl<<"9 输出图书所有信息"<<
-		endl<<"10.统计"<<endl<<endl;
-		cin>>input;
-		switch(input) {
-			case 1:
-				// 可以增加新图书。
-				AddNewBook(p);
-				break;
-			case 2:
-				// 可以修改某个图书信息（书号不能改）。
-				break;
-			case 3:
-				// 可以删除某些图书信息（分别按书号、书名进行删除）。
-				break;
-			case 4:
-				// 按书号进行查找（要求使用二分查找法，并输出其查找长度）
-				break;
-			case 5:
-				// 按作者进行查找，如果有多本图书，则全部查找出来。
-				break;
-			case 6:
-				// 可以按价格范围进行查找（结果按价格升序输出）。
-				break;
-			case 7:
-				// 查找某个出版社出版的所有图书信息，按价格降序输出。
-				break;
-			case 8:
-				// 按书名进行模糊查找。
-				break;
-			case 9:
-				// 输出所有图书信息。
-				if(ReadStructFromFile(p)==OK) {
-					AccessNodesData(p);
-				}
-				break;
-			case 10:
-				// 统计。
-				break;
-			
+	while (1) {
+		int input = 0;
+		cout << "1.增加图书" <<
+			endl << "2.修改图书信息" <<
+			endl << "3.删除指定图书" <<
+			endl << "4.按照书号查找" <<
+			endl << "5.按照作者查找" <<
+			endl << "6.按照价格范围查找" <<
+			endl << "7.查找某个作者出版的所有信息，按价格升序输出 " <<
+			endl << "8.书名模糊查找" <<
+			endl << "9 输出图书所有信息" <<
+			endl << "10.统计" << endl << endl;
+		cin >> input;
+		switch (input) {
+		case 1:
+			// 可以增加新图书。
+			AddNewBook(p);
+			break;
+		case 2:
+			// 可以修改某个图书信息（书号不能改）。
+			break;
+		case 3:
+			// 可以删除某些图书信息（分别按书号、书名进行删除）。
+			break;
+		case 4:
+			// 按书号进行查找（要求使用二分查找法，并输出其查找长度）
+			break;
+		case 5:
+			// 按作者进行查找，如果有多本图书，则全部查找出来。
+			break;
+		case 6:
+			// 可以按价格范围进行查找（结果按价格升序输出）。
+			break;
+		case 7:
+			// 查找某个出版社出版的所有图书信息，按价格降序输出。
+			break;
+		case 8:
+			// 按书名进行模糊查找。
+			break;
+		case 9:
+			// 输出所有图书信息。
+			if (ReadStructFromFile(p) == OK) {
+				AccessNodesData(p);
+			}
+			break;
+		case 10:
+			// 统计。
+			break;
 		}
 	}
 }
 
 int main() {
-	//Unit_v3();
+	//InitData();
 	Console();
 }
 
