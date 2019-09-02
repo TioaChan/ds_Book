@@ -64,6 +64,7 @@ void Console();
 #include"InitData.h"
 #include"search.h"
 #include"common.h"
+#include"counting.h"
 
 
 
@@ -130,18 +131,6 @@ Status ListDelete(LinkList L, int i) {
 	return OK;
 }
 
-void AccessNodesData(LNode* L) {
-	LNode* p = L;
-	printf("头节点信息为：\n");
-	printf("%-15s|%-15s|%-15s|%-15s|%-2.0f |\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
-	p = p->next; // 跑出头节点
-	do {
-		printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
-		p = p->next;
-	} while (p != NULL); // !! 注意是p!=NULL 而不是p->next!=NULL
-}
-
-
 Status WriteStructToFile(LNode* L) {
 	LNode* p = L->next;
 	FILE* pf;
@@ -175,142 +164,7 @@ Status ReadStructFromFile(LNode* L) {
 	return OK;
 }
 
-void Statistics(LNode* L) {
-	// 统计
-	int inputOption;
-	while (1) {
-		cout << "1.统计出版社图书出版总数，按升序输出 2.统计作者出版图书总数，按降序输出 3.退出" << endl;
-		cin >> inputOption;
-		if (inputOption == 3) {
-			break;
-		}
-		switch (inputOption) {
-		case 1: {
-			// 统计出版社
-			PNode* waitSort = new PNode;
-			LNode* p = L->next;
-			PNode* pw = waitSort;
-			PNode* pre = waitSort;
-			strcpy(pw->data.pName, "###");
-			pw->next = NULL;
-			pw->data.count = 0;
-			while (p) {
-				int flag = 1;
-				while (pw) {
-					if (strcmp(pw->data.pName, p->data.publisher) == 0) {
-						flag = 0;
-					}
-					pre = pw;
-					pw = pw->next;
-				}
 
-				if (flag == 1) {
-					PNode* q = new PNode;
-					strcpy(q->data.pName, p->data.publisher);
-					q->next = NULL;
-					q->data.count = 0;
-					pre->next = q;
-				}
-				pw = waitSort->next;
-				p = p->next;
-			}
-			pw = waitSort->next;
-			p = L->next;
-			while (pw) {
-				p = L->next;
-				while (p) {
-					if (strcmp(pw->data.pName, p->data.publisher) == 0) {
-						pw->data.count++;
-					}
-					p = p->next;
-				}
-				pw = pw->next;
-			}
-			pw = waitSort->next;
-			Publisher t;
-			for (PNode* temp = waitSort->next; temp->next != NULL; temp = temp->next) {
-				for (PNode* pn = waitSort->next; pn->next != NULL; pn = pn->next) {
-					if (pn->data.count > pn->next->data.count) {
-						t = pn->data;
-						pn->data = pn->next->data;
-						pn->next->data = t;
-					}
-				}
-			}
-			while (pw) {
-				cout << pw->data.pName << ":" << pw->data.count << endl;;
-				pw = pw->next;
-			}
-			break;
-		}
-		case 2: {
-			// 统计出版社
-			ANode* waitSort = new ANode;
-			LNode* p = L->next;
-			ANode* pw = waitSort;
-			ANode* pre = waitSort;
-			strcpy(pw->data.aName, "###");
-			pw->next = NULL;
-			pw->data.count = 0;
-			while (p) {
-				int flag = 1;
-				while (pw) {
-					if (strcmp(pw->data.aName, p->data.author) == 0) {
-						flag = 0;
-					}
-					pre = pw;
-					pw = pw->next;
-				}
-
-				if (flag == 1) {
-					ANode* q = new ANode;
-					strcpy(q->data.aName, p->data.author);
-					q->next = NULL;
-					q->data.count = 0;
-					pre->next = q;
-				}
-				pw = waitSort->next;
-				p = p->next;
-			}
-			pw = waitSort->next;
-			p = L->next;
-
-			while (pw) {
-				p = L->next;
-				while (p) {
-
-					if (strcmp(pw->data.aName, p->data.author) == 0) {
-						pw->data.count++;
-					}
-					p = p->next;
-				}
-				pw = pw->next;
-			}
-			pw = waitSort->next;
-			Author t;
-			for (ANode* temp = waitSort->next; temp->next != NULL; temp = temp->next) {
-				for (ANode* pn = waitSort->next; pn->next != NULL; pn = pn->next) {
-					if (pn->data.count < pn->next->data.count) {
-						t = pn->data;
-						pn->data = pn->next->data;
-						pn->next->data = t;
-					}
-				}
-			}
-			while (pw) {
-				cout << pw->data.aName << ":" << pw->data.count << endl;;
-				pw = pw->next;
-			}
-			break;
-		}
-		case 3:
-			break;
-		default:
-			cout << "请重新输入数字" << endl;
-			break;
-		}
-	}
-}
 
 Status AddNewBook(LNode* L) {
 	float price;
@@ -545,10 +399,10 @@ void Console() {
 			break;
 		case 9:
 			Statistics(p);
-			// 统计。
 			break;
 		default:
 			cout << "输入错误，轻重新输入" << endl;
+			Console();
 			break;
 		}
 	}

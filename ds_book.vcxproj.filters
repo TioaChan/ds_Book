@@ -30,6 +30,9 @@
     <ClInclude Include="common.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="counting.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="home.cpp">

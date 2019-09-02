@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
 	Book book;
@@ -12,51 +12,46 @@ Book BookFactory(const char* no, const char* bookName, const char* author, const
 
 Status InitHeadNode(LNode* L) {
 	Book BaseBookifm;
-	strcpy(BaseBookifm.no, "ÊéºÅ");
-	strcpy(BaseBookifm.bookName, "ÊéÃû");
-	strcpy(BaseBookifm.author, "×÷Õß");
-	strcpy(BaseBookifm.publisher, "³ö°æÉç");
+	strcpy(BaseBookifm.no, "ä¹¦å·");
+	strcpy(BaseBookifm.bookName, "ä¹¦å");
+	strcpy(BaseBookifm.author, "ä½œè€…");
+	strcpy(BaseBookifm.publisher, "å‡ºç‰ˆç¤¾");
 	BaseBookifm.price = 0;
 	L->data = BaseBookifm;
 	// L->data=BaseBookifm
-	// ÕâÀïÊÇÖ±½Ó¸³Öµ
+	// è¿™é‡Œæ˜¯ç›´æ¥èµ‹å€¼
 	return OK;
 }
 
 /*
-	µ¥Á´±í³õÊ¼»¯Í·½Úµã
+	å•é“¾è¡¨åˆå§‹åŒ–å¤´èŠ‚ç‚¹
 */
 Status InitList(LNode** L) {
 	*L = (LNode*)malloc(sizeof(LNode));
 	if (*L == NULL) {
-		printf("ÉêÇë¿Õ¼äÊ§°Ü");
+		printf("ç”³è¯·ç©ºé—´å¤±è´¥");
 	}
 	if (InitHeadNode(*L) == OK) {
-		cout << "³É¹¦³õÊ¼»¯Í·½áµã" << endl << endl;
+		cout << "æˆåŠŸåˆå§‹åŒ–å¤´ç»“ç‚¹" << endl << endl;
 	}
 	(*L)->next = NULL;
 	return OK;
 }
 
-/*
-	µ¥Á´±í·µ»Ø³¤¶È
-*/
-int ListLength(LinkList L) {
-	// ·µ»ØLÖĞÔªËØ¸öÊı
+int ListLength(LinkList L) {// è¿”å›Lä¸­å…ƒç´ ä¸ªæ•°
 	LinkList p;
-	p = L->next; // pÖ¸ÏòµÚÒ»¸ö½áµã
+	p = L->next; // pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹
 	int i = 0;
-	while (p) { // ±éÀúµ¥Á´±í£¬Í³¼Æ½áµãÊı
+	while (p) { // éå†å•é“¾è¡¨ï¼Œç»Ÿè®¡ç»“ç‚¹æ•°
 		i++;
 		p = p->next;
 	}
 	return i;
 }
 
-Status ClearList(LinkList L) {
-	// ½«LÖØÖÃÎª¿Õ±í
+Status ClearList(LinkList L) {// å°†Lé‡ç½®ä¸ºç©ºè¡¨
 	LinkList p, q;
-	p = L->next; // pÖ¸ÏòµÚÒ»¸ö½áµã
+	p = L->next; // pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹
 	while (p) {
 		q = p->next;
 		free(p);
@@ -66,7 +61,7 @@ Status ClearList(LinkList L) {
 	return OK;
 }
 
-void JudgeResponseCode(Status ResponseCode) {
+void JudgeResponseCode(Status ResponseCode) {//ç”¨äºåˆ¤æ–­è¿”å›å€¼
 	switch (ResponseCode) {
 	case OK:
 		printf("Success\n");
@@ -83,3 +78,13 @@ void JudgeResponseCode(Status ResponseCode) {
 	}
 }
 
+void AccessNodesData(LNode* L) {//éå†èŠ‚ç‚¹å¹¶æ‰“å°
+	LNode* p = L;
+	printf("èŠ‚ç‚¹ä¿¡æ¯ä¸ºï¼š\n");
+	printf("%-15s|%-15s|%-15s|%-15s|%-2.0f |\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+	p = p->next; // è·‘å‡ºå¤´èŠ‚ç‚¹
+	do {
+		printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+		p = p->next;
+	} while (p != NULL); // !! æ³¨æ„æ˜¯p!=NULL è€Œä¸æ˜¯p->next!=NULL
+}

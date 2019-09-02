@@ -159,6 +159,7 @@
     <ClInclude Include="InitData.h" />
     <ClInclude Include="sort.h" />
     <ClInclude Include="order.h" />
+    <ClInclude Include="counting.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
