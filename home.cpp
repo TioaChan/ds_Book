@@ -36,7 +36,6 @@ typedef struct PNode {
 	struct PNode* next;
 } PNode;
 
-
 typedef struct {
 	char aName[50];
 	int count;
@@ -64,76 +63,9 @@ void Console();
 #include"order.h"
 #include"InitData.h"
 #include"search.h"
+#include"common.h"
 
 
-Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
-	Book book;
-	strcpy(book.no, no);
-	strcpy(book.bookName, bookName);
-	strcpy(book.author, author);
-	strcpy(book.publisher, publisher);
-	book.price = price;
-	return book;
-}
-
-/*
- * 单链表初始化头节点
-*/
-Status InitList(LNode** L) {
-	*L = (LNode*)malloc(sizeof(LNode));
-	if (*L == NULL) {
-		printf("申请空间失败");
-	}
-	if (InitHeadNode(*L) == OK) {
-		cout << "成功初始化头结点" << endl << endl;
-	}
-	(*L)->next = NULL;
-	return OK;
-}
-
-/*
- * 单链表初始化头节点
-*/
-Status InitHeadNode(LNode* L) {
-	Book BaseBookifm;
-	strcpy(BaseBookifm.no, "书号");
-	strcpy(BaseBookifm.bookName, "书名");
-	strcpy(BaseBookifm.author, "作者");
-	strcpy(BaseBookifm.publisher, "出版社");
-	BaseBookifm.price = 0;
-	L->data = BaseBookifm;
-	// L->data=BaseBookifm
-	// 这里是直接赋值
-	return OK;
-}
-
-/*
- * 单链表返回长度
-*/
-int ListLength(LinkList L) {
-	// 返回L中元素个数
-	LinkList p;
-	p = L->next; // p指向第一个结点
-	int i = 0;
-	while (p) { // 遍历单链表，统计结点数
-		i++;
-		p = p->next;
-	}
-	return i;
-}
-
-Status ClearList(LinkList L) {
-	// 将L重置为空表
-	LinkList p, q;
-	p = L->next; // p指向第一个结点
-	while (p) {
-		q = p->next;
-		free(p);
-		p = q;
-	}
-	L->next = NULL;
-	return OK;
-}
 
 Status ListInsert(LNode* L, int i, Book e) {
 	LNode* p = L;
@@ -209,22 +141,6 @@ void AccessNodesData(LNode* L) {
 	} while (p != NULL); // !! 注意是p!=NULL 而不是p->next!=NULL
 }
 
-void JudgeResponseCode(Status ResponseCode) {
-	switch (ResponseCode) {
-	case OK:
-		printf("Success\n");
-		break;
-	case ERROR:
-		printf("ERROR check your code!\n");
-		break;
-	case OVERFLOW:
-		printf("memory has OVERFLOW now\n");
-		break;
-	default:
-		printf("No ResponseCode\n");
-		break;
-	}
-}
 
 Status WriteStructToFile(LNode* L) {
 	LNode* p = L->next;
@@ -401,7 +317,6 @@ Status AddNewBook(LNode* L) {
 	int flag; // 检测no
 	LNode* p = L->next;
 	char name[50], au[50], pub[50], no[50];
-
 	cout << "请分别输入书号、书名、作者（1个）、出版社、价格五个部分" << endl;
 	int length = ListLength(L);
 	cin >> no >> name >> au >> pub >> price;
@@ -429,8 +344,8 @@ Status AddNewBook(LNode* L) {
 	}
 	LNode* q = new LNode;
 	q->data = e;
-	p->next = q;
 	q->next = NULL;
+	p->next = q;
 	WriteStructToFile(L);
 	return OK;
 }
@@ -583,10 +498,10 @@ void Console() {
 		cout << "1.增加图书" <<
 			endl << "2.修改图书信息" <<
 			endl << "3.删除指定图书" <<
-			endl << "4.查询图书信息" <<
-			endl << "5.按照价格范围查找" <<
-			endl << "6.查找某个作者出版的所有信息，按价格升序输出 " <<
-			endl << "7.书名模糊查找" <<
+			endl << "4.查询图书信息" <<//
+			endl << "5.按照价格范围查找" <<//
+			endl << "6.查找某个作者出版的所有信息，按价格升序输出 " <<//
+			endl << "7.书名模糊查找" <<//
 			endl << "8 输出图书所有信息" <<
 			endl << "9.统计" << endl << endl;
 		cin >> input;
