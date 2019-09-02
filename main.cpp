@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -21,10 +21,10 @@ typedef struct {
 } Book;
 
 typedef struct LNode {
-	Book data; // Êı¾İÓò
-	struct LNode* next; // Ö¸ÕëÓò
+	Book data; // æ•°æ®åŸŸ
+	struct LNode* next; // æŒ‡é’ˆåŸŸ
 } LNode, * LinkList;
-// *LinkListÎªLnodeÀàĞÍµÄÖ¸Õë
+// *LinkListä¸ºLnodeç±»å‹çš„æŒ‡é’ˆ
 
 struct Publisher {
 	char pName[15];
@@ -36,7 +36,7 @@ struct Author {
 	int count;
 };
 
-// È·¶¨µÚÒ»¸ö³ö°æÉÌ£¬È»ºó£¬Ã¿Ñ¡ÔñÒ»¸ö¾Í±éÀúÒ»±é²»Í¬³ö°æÉçµÄÊı×é
+// ç¡®å®šç¬¬ä¸€ä¸ªå‡ºç‰ˆå•†ï¼Œç„¶åï¼Œæ¯é€‰æ‹©ä¸€ä¸ªå°±éå†ä¸€éä¸åŒå‡ºç‰ˆç¤¾çš„æ•°ç»„
 
 Status ClearList(LinkList L);
 Status DestoryList(LinkList L);
@@ -65,45 +65,45 @@ Book BookFactory(const char* no, const char* bookName, const char* author, const
 }
 
 /*
- * µ¥Á´±í³õÊ¼»¯Í·½Úµã
+ * å•é“¾è¡¨åˆå§‹åŒ–å¤´èŠ‚ç‚¹
 */
 Status InitList(LNode** L) {
 	*L = (LNode*)malloc(sizeof(LNode));
 	if (*L == NULL) {
-		printf("ÉêÇë¿Õ¼äÊ§°Ü");
+		printf("ç”³è¯·ç©ºé—´å¤±è´¥");
 	}
 	if (InitHeadNode(*L) == OK) {
-		cout << "³É¹¦³õÊ¼»¯Í·½áµã" << endl << endl;
+		cout << "æˆåŠŸåˆå§‹åŒ–å¤´ç»“ç‚¹" << endl << endl;
 	}
 	(*L)->next = NULL;
 	return OK;
 }
 
 /*
- * µ¥Á´±í³õÊ¼»¯Í·½Úµã
+ * å•é“¾è¡¨åˆå§‹åŒ–å¤´èŠ‚ç‚¹
 */
 Status InitHeadNode(LNode* L) {
 	Book BaseBookifm;
-	strcpy(BaseBookifm.no, "ÊéºÅ");
-	strcpy(BaseBookifm.bookName, "ÊéÃû");
-	strcpy(BaseBookifm.author, "×÷Õß");
-	strcpy(BaseBookifm.publisher, "³ö°æÉç");
+	strcpy(BaseBookifm.no, "ä¹¦å·");
+	strcpy(BaseBookifm.bookName, "ä¹¦å");
+	strcpy(BaseBookifm.author, "ä½œè€…");
+	strcpy(BaseBookifm.publisher, "å‡ºç‰ˆç¤¾");
 	BaseBookifm.price = 0;
 	L->data = BaseBookifm;
 	// L->data=BaseBookifm
-	// ÕâÀïÊÇÖ±½Ó¸³Öµ
+	// è¿™é‡Œæ˜¯ç›´æ¥èµ‹å€¼
 	return OK;
 }
 
 /*
- * µ¥Á´±í·µ»Ø³¤¶È
+ * å•é“¾è¡¨è¿”å›é•¿åº¦
 */
 int ListLength(LinkList L) {
-	// ·µ»ØLÖĞÔªËØ¸öÊı
+	// è¿”å›Lä¸­å…ƒç´ ä¸ªæ•°
 	LinkList p;
-	p = L->next; // pÖ¸ÏòµÚÒ»¸ö½áµã
+	p = L->next; // pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹
 	int i = 0;
-	while (p) { // ±éÀúµ¥Á´±í£¬Í³¼Æ½áµãÊı
+	while (p) { // éå†å•é“¾è¡¨ï¼Œç»Ÿè®¡ç»“ç‚¹æ•°
 		i++;
 		p = p->next;
 	}
@@ -111,11 +111,11 @@ int ListLength(LinkList L) {
 }
 
 /*
- * µ¥Á´±íÊÇ·ñÎª¿Õ
+ * å•é“¾è¡¨æ˜¯å¦ä¸ºç©º
 */
 int ListEmpty(LNode* L) {
-	// ÈôLÎª¿Õ±í£¬  ·ñÔò·µ»Ø0
-	if (L->next) { // ·Ç¿Õ
+	// è‹¥Lä¸ºç©ºè¡¨ï¼Œ  å¦åˆ™è¿”å›0
+	if (L->next) { // éç©º
 		return 0;
 	}
 	else {
@@ -124,7 +124,7 @@ int ListEmpty(LNode* L) {
 }
 
 /*
- * µ¥Á´±íÊÇ·ñÎª¿Õ
+ * å•é“¾è¡¨æ˜¯å¦ä¸ºç©º
 */
 Status DestoryList(LinkList L) {
 	LinkList p;
@@ -137,9 +137,9 @@ Status DestoryList(LinkList L) {
 }
 
 Status ClearList(LinkList L) {
-	// ½«LÖØÖÃÎª¿Õ±í
+	// å°†Lé‡ç½®ä¸ºç©ºè¡¨
 	LinkList p, q;
-	p = L->next; // pÖ¸ÏòµÚÒ»¸ö½áµã
+	p = L->next; // pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹
 	while (p) {
 		q = p->next;
 		free(p);
@@ -150,15 +150,15 @@ Status ClearList(LinkList L) {
 }
 
 Status GetElem(LinkList L, int i, Book* e) {
-	LinkList p = L->next; // Ìø¹ıÍ·½Úµã
+	LinkList p = L->next; // è·³è¿‡å¤´èŠ‚ç‚¹
 	int j = 1;
-	while (p && j < i) { // ÏòºóÉ¨Ãè£¬Ö±µ½pÖ¸ÏòµÚi¸öÔªËØ »òpÎª¿Õ
+	while (p && j < i) { // å‘åæ‰«æï¼Œç›´åˆ°pæŒ‡å‘ç¬¬iä¸ªå…ƒç´  æˆ–pä¸ºç©º
 		p = p->next;
 		++j;
 	}
 	if (!p || j > i)
 		return ERROR;
-	*e = p->data; // È¡µÚi¸öÔªËØ
+	*e = p->data; // å–ç¬¬iä¸ªå…ƒç´ 
 	return OK;
 } // GetElem
 
@@ -167,28 +167,28 @@ Status ListInsert(LNode* L, int i, Book e) {
 	int j = 0;
 	while (p && j < i - 1) {
 		p = p->next;
-		j++;  // Ñ°ÕÒi-1¸ö½áµã
+		j++;  // å¯»æ‰¾i-1ä¸ªç»“ç‚¹
 	}
 	if (!p || j > i - 1) {
-		return ERROR; //i´óÓÚ±í³¤+1»òÕßĞ¡ÓÚ1
+		return ERROR; //iå¤§äºè¡¨é•¿+1æˆ–è€…å°äº1
 	}
 	LNode* Node = (LNode*)malloc(sizeof(LNode));
-	//Ê×ÏÈLNodeÊÇ¾Ö²¿±äÁ¿£¬ÔÚÕ»Àï£¬º¯ÊıÏûÍöµÄÊ±ºòLNodeÒ²¸ú×ÅÏûÍö
-	// ËùÒÔ²»ÄÜLNode NodeÉùÃ÷ÔÚº¯ÊıÀï£¬È»ºóÈÃ²åÈëµ¥Á´±íÖĞ
+	//é¦–å…ˆLNodeæ˜¯å±€éƒ¨å˜é‡ï¼Œåœ¨æ ˆé‡Œï¼Œå‡½æ•°æ¶ˆäº¡çš„æ—¶å€™LNodeä¹Ÿè·Ÿç€æ¶ˆäº¡
+	// æ‰€ä»¥ä¸èƒ½LNode Nodeå£°æ˜åœ¨å‡½æ•°é‡Œï¼Œç„¶åè®©æ’å…¥å•é“¾è¡¨ä¸­
 
-	// Ê¹ÓÃmallocÊÇÔÚ¶ÑÖĞÉêÇë³¤¶ÈÎª LNodeµÄÁ¬Ğø¿Õ¼ä
-	// ½ø¶øÉêÇëµ½Ò»¸ö½áµã
-	// Õâ¸ö½áµãÏµÍ³²»»á×Ô¶¯»ØÊÕ£¬ĞèÒª³ÌĞòÔ±×Ô¼º½øĞĞÊÍ·Å
-	// ÕâÑù¾Í¿ÉÒÔ±£Ö¤½áµã²»»á±»ÏûÍö
-	// Í¬Ê±¼´½«ÏûÍöµÄNodeÖ¸Õë£¬ÒòÎª¼°Ê±µÄÁ´½Óµ½ÁËÉÏÒ»¸ö½ÚµãÖ¸ÕëÉÏ
-	// Òò´ËµÃµ½ÁË±£Áô
+	// ä½¿ç”¨mallocæ˜¯åœ¨å †ä¸­ç”³è¯·é•¿åº¦ä¸º LNodeçš„è¿ç»­ç©ºé—´
+	// è¿›è€Œç”³è¯·åˆ°ä¸€ä¸ªç»“ç‚¹
+	// è¿™ä¸ªç»“ç‚¹ç³»ç»Ÿä¸ä¼šè‡ªåŠ¨å›æ”¶ï¼Œéœ€è¦ç¨‹åºå‘˜è‡ªå·±è¿›è¡Œé‡Šæ”¾
+	// è¿™æ ·å°±å¯ä»¥ä¿è¯ç»“ç‚¹ä¸ä¼šè¢«æ¶ˆäº¡
+	// åŒæ—¶å³å°†æ¶ˆäº¡çš„NodeæŒ‡é’ˆï¼Œå› ä¸ºåŠæ—¶çš„é“¾æ¥åˆ°äº†ä¸Šä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆä¸Š
+	// å› æ­¤å¾—åˆ°äº†ä¿ç•™
 
 	Node->data = e;
 	Node->next = p->next;
 	p->next = Node;
 
 	// ====================================
-	//  ÒÔÏÂÎª´íÎó´úÂë
+	//  ä»¥ä¸‹ä¸ºé”™è¯¯ä»£ç 
 	//	LNode N;
 	//	LNode *q=&N;
 	//	q->data=e;
@@ -216,14 +216,14 @@ Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, co
 }
 
 Status ListDelete(LinkList L, int i) {
-	// ÔÚ´øÍ·½áµãµÄµ¥Á´±í£¬É¾³ıµÚi¸öÔªËØ
+	// åœ¨å¸¦å¤´ç»“ç‚¹çš„å•é“¾è¡¨ï¼Œåˆ é™¤ç¬¬iä¸ªå…ƒç´ 
 	LNode* p = L;
 	int j = 0;
-	while ((p->next) && (j < i - 1)) { // ²éÕÒµÚi-1¸ö½áµã£¬pÖ¸Ïò¸Ã½áµã
+	while ((p->next) && (j < i - 1)) { // æŸ¥æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹ï¼ŒpæŒ‡å‘è¯¥ç»“ç‚¹
 		p = p->next;
 		j++;
 	}
-	if (!(p->next) || (j > i - 1)) {	// µ±i>n»òi<1Ê±£¬É¾³ıÎ»ÖÃ²»ºÏÀí
+	if (!(p->next) || (j > i - 1)) {	// å½“i>næˆ–i<1æ—¶ï¼Œåˆ é™¤ä½ç½®ä¸åˆç†
 		return ERROR;
 	}
 	LNode* q = p->next;
@@ -234,18 +234,18 @@ Status ListDelete(LinkList L, int i) {
 
 void AccessNodesData(LNode* L) {
 	LNode* p = L;
-	printf("Í·½ÚµãĞÅÏ¢Îª£º\n");
+	printf("å¤´èŠ‚ç‚¹ä¿¡æ¯ä¸ºï¼š\n");
 	printf("%-15s|%-15s|%-15s|%-15s|%-2.0f |\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
-	p = p->next; // ÅÜ³öÍ·½Úµã
+	p = p->next; // è·‘å‡ºå¤´èŠ‚ç‚¹
 	do {
 		printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
 		p = p->next;
-	} while (p != NULL); // !! ×¢ÒâÊÇp!=NULL ¶ø²»ÊÇp->next!=NULL
+	} while (p != NULL); // !! æ³¨æ„æ˜¯p!=NULL è€Œä¸æ˜¯p->next!=NULL
 }
 
 //void SortPublisher(LNode* L) {
 //	LNode* p=L;
-//	p=p->next; // ÅÜ³öÍ·½Úµã
+//	p=p->next; // è·‘å‡ºå¤´èŠ‚ç‚¹
 //	int length=ListLength(L);
 //	Publisher* pu=new Publisher[length];
 //	pu[0].pName=p->data.publisher;
@@ -298,17 +298,17 @@ void JudgeResponseCode(Status ResponseCode) {
 }
 
 void BatchInsert(LNode* p) {
-	printf("==================================³õÊ¼»¯Êı¾İ=====================================\n");
-	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "ÕÅÈı", "Çå»ª³ö°æÉç", 100.0));
-	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "ÀîËÄ", "¹¤Òµ³ö°æÉç", 200.0));
-	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "ÍõÎå", "±±´ó³ö°æÉç", 300.0));
-	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "ÕÔÁù", "¸ßµÈ½ÌÓı³ö°æÉç", 660.0));
-	JudgeResponseCode(SuperListInsert(p, 5, "005", "¼ÆËã»úÍøÂç", "Ğ¡Ã÷", "A³ö°æÉç", 780.0));
-	JudgeResponseCode(SuperListInsert(p, 6, "006", "¼ÆËã»ú²Ù×÷ÏµÍ³", "Ğ¡ºì", "B³ö°æÉç", 120.0));
-	JudgeResponseCode(SuperListInsert(p, 7, "007", "Êı¾İ½á¹¹", "Ğ¡À¶", "Ö£´ó³ö°æÉç", 140.0));
-	JudgeResponseCode(SuperListInsert(p, 8, "008", "C++´ÓÈëÃÅµ½·ÅÆú", "Ğ¡ÖÇ", "ºÓÄÏ¹¤³Ì³ö°æÉç", 180.0));
-	printf("µ±Ç°Ò»¹²ÓĞ%d¸öÊı¾İ\n", ListLength(p));
-	printf("==================================³õÊ¼»¯Êı¾İ=====================================\n\n");
+	printf("==================================åˆå§‹åŒ–æ•°æ®=====================================\n");
+	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "å¼ ä¸‰", "æ¸…åå‡ºç‰ˆç¤¾", 100.0));
+	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "æå››", "å·¥ä¸šå‡ºç‰ˆç¤¾", 200.0));
+	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "ç‹äº”", "åŒ—å¤§å‡ºç‰ˆç¤¾", 300.0));
+	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "èµµå…­", "é«˜ç­‰æ•™è‚²å‡ºç‰ˆç¤¾", 660.0));
+	JudgeResponseCode(SuperListInsert(p, 5, "005", "è®¡ç®—æœºç½‘ç»œ", "å°æ˜", "Aå‡ºç‰ˆç¤¾", 780.0));
+	JudgeResponseCode(SuperListInsert(p, 6, "006", "è®¡ç®—æœºæ“ä½œç³»ç»Ÿ", "å°çº¢", "Bå‡ºç‰ˆç¤¾", 120.0));
+	JudgeResponseCode(SuperListInsert(p, 7, "007", "æ•°æ®ç»“æ„", "å°è“", "éƒ‘å¤§å‡ºç‰ˆç¤¾", 140.0));
+	JudgeResponseCode(SuperListInsert(p, 8, "008", "C++ä»å…¥é—¨åˆ°æ”¾å¼ƒ", "å°æ™º", "æ²³å—å·¥ç¨‹å‡ºç‰ˆç¤¾", 180.0));
+	printf("å½“å‰ä¸€å…±æœ‰%dä¸ªæ•°æ®\n", ListLength(p));
+	printf("==================================åˆå§‹åŒ–æ•°æ®=====================================\n\n");
 }
 
 Status WriteStructToFile(LNode* L) {
@@ -322,7 +322,7 @@ Status WriteStructToFile(LNode* L) {
 		p = p->next;
 		count++;
 	}
-	cout << "¹²ÓĞ" << count << "ÌõÊı¾İ" << endl;
+	cout << "å…±æœ‰" << count << "æ¡æ•°æ®" << endl;
 	fclose(pf);
 	return OK;
 }
@@ -338,7 +338,7 @@ Status ReadStructFromFile(LNode* L) {
 		int res = fscanf(pf, "%s%s%s%s%f", b.no, b.bookName, b.author, b.publisher, &b.price);
 		if (res == -1)break;
 		ListInsert(L, ++i, b);
-		// !DebugÖØÒªĞÔ
+		// !Debugé‡è¦æ€§
 	}
 	fclose(pf);
 	return OK;
@@ -348,7 +348,7 @@ Status AddNewBook(LNode* L) {
 	float price;
 	char no[50], name[50], au[50], pub[50];
 	LNode* p = L->next;
-	cout << "Çë·Ö±ğÊäÈëÊéºÅ¡¢ÊéÃû¡¢×÷Õß£¨1¸ö£©¡¢³ö°æÉç¡¢¼Û¸ñÎå¸ö²¿·Ö" << endl;
+	cout << "è¯·åˆ†åˆ«è¾“å…¥ä¹¦å·ã€ä¹¦åã€ä½œè€…ï¼ˆ1ä¸ªï¼‰ã€å‡ºç‰ˆç¤¾ã€ä»·æ ¼äº”ä¸ªéƒ¨åˆ†" << endl;
 	int length = ListLength(L);
 	cin >> no >> name >> au >> pub >> price;
 	Book e = BookFactory(no, name, au, pub, price);
@@ -363,81 +363,81 @@ Status AddNewBook(LNode* L) {
 	return OK;
 }
 
-void InitData() {//³õÊ¼»¯Êı¾İ 
-	//	LNode l;	  // LNode½á¹¹Ìå
-	LNode* p;  // pÎªÖ¸ÏòLNodeµÄÖ¸ÕëÌå
-	LNode** q = &p; // qÖ¸ÏòÖ¸ÕëµÄÖ¸Õë
-	/* ³õÊ¼»¯Ö¸ÕëĞèÒª¸øÈë Ö¸ÏòÖ¸ÕëµÄÖ¸Õë£¬Í¨¹ıÖ¸ÏòÖ¸ÕëµÄÖ¸ÕëÀ´¸Ä±äÖ¸ÕëµÄµØÖ·
-	 * ÕâÀïÊÇÍ¨¹ı¶ş¼¶Ö¸Õë´«µİ
+void InitData() {//åˆå§‹åŒ–æ•°æ® 
+	//	LNode l;	  // LNodeç»“æ„ä½“
+	LNode* p;  // pä¸ºæŒ‡å‘LNodeçš„æŒ‡é’ˆä½“
+	LNode** q = &p; // qæŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆ
+	/* åˆå§‹åŒ–æŒ‡é’ˆéœ€è¦ç»™å…¥ æŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆï¼Œé€šè¿‡æŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆæ¥æ”¹å˜æŒ‡é’ˆçš„åœ°å€
+	 * è¿™é‡Œæ˜¯é€šè¿‡äºŒçº§æŒ‡é’ˆä¼ é€’
 	 */
 	InitList(q);
 	/*
-	 * ÅúÁ¿²åÈëÊı¾İ
+	 * æ‰¹é‡æ’å…¥æ•°æ®
 	 */
 	BatchInsert(p);
 	if (WriteStructToFile(p) == OK) {
-		cout << "Ğ´ÈëÊı¾İ³É¹¦" << endl;
+		cout << "å†™å…¥æ•°æ®æˆåŠŸ" << endl;
 	}
 	if (ReadStructFromFile(p) == OK) {
-		cout << "¶ÁÈ¡Êı¾İ³É¹¦" << endl;
+		cout << "è¯»å–æ•°æ®æˆåŠŸ" << endl;
 	}
 	AccessNodesData(p);
 }
 
 void Console() {
-	cout << "»¶Ó­À´µ½Í¼Êé¹ÜÀíÈí¼şVer1.0°æ±¾" << endl;
+	cout << "æ¬¢è¿æ¥åˆ°å›¾ä¹¦ç®¡ç†è½¯ä»¶Ver1.0ç‰ˆæœ¬" << endl;
 
-	LNode* p;  // pÎªÖ¸ÏòLNodeµÄÖ¸ÕëÌå
-	LNode** q = &p; // qÖ¸ÏòÖ¸ÕëµÄÖ¸Õë
+	LNode* p;  // pä¸ºæŒ‡å‘LNodeçš„æŒ‡é’ˆä½“
+	LNode** q = &p; // qæŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆ
 	InitList(q);
 	ReadStructFromFile(p);
 	while (1) {
 		int input = 0;
-		cout << "1.Ôö¼ÓÍ¼Êé" <<
-			endl << "2.ĞŞ¸ÄÍ¼ÊéĞÅÏ¢" <<
-			endl << "3.É¾³ıÖ¸¶¨Í¼Êé" <<
-			endl << "4.°´ÕÕÊéºÅ²éÕÒ" <<
-			endl << "5.°´ÕÕ×÷Õß²éÕÒ" <<
-			endl << "6.°´ÕÕ¼Û¸ñ·¶Î§²éÕÒ" <<
-			endl << "7.²éÕÒÄ³¸ö×÷Õß³ö°æµÄËùÓĞĞÅÏ¢£¬°´¼Û¸ñÉıĞòÊä³ö " <<
-			endl << "8.ÊéÃûÄ£ºı²éÕÒ" <<
-			endl << "9 Êä³öÍ¼ÊéËùÓĞĞÅÏ¢" <<
-			endl << "10.Í³¼Æ" << endl << endl;
+		cout << "1.å¢åŠ å›¾ä¹¦" <<
+			endl << "2.ä¿®æ”¹å›¾ä¹¦ä¿¡æ¯" <<
+			endl << "3.åˆ é™¤æŒ‡å®šå›¾ä¹¦" <<
+			endl << "4.æŒ‰ç…§ä¹¦å·æŸ¥æ‰¾" <<
+			endl << "5.æŒ‰ç…§ä½œè€…æŸ¥æ‰¾" <<
+			endl << "6.æŒ‰ç…§ä»·æ ¼èŒƒå›´æŸ¥æ‰¾" <<
+			endl << "7.æŸ¥æ‰¾æŸä¸ªä½œè€…å‡ºç‰ˆçš„æ‰€æœ‰ä¿¡æ¯ï¼ŒæŒ‰ä»·æ ¼å‡åºè¾“å‡º " <<
+			endl << "8.ä¹¦åæ¨¡ç³ŠæŸ¥æ‰¾" <<
+			endl << "9 è¾“å‡ºå›¾ä¹¦æ‰€æœ‰ä¿¡æ¯" <<
+			endl << "10.ç»Ÿè®¡" << endl << endl;
 		cin >> input;
 		switch (input) {
 		case 1:
-			// ¿ÉÒÔÔö¼ÓĞÂÍ¼Êé¡£
+			// å¯ä»¥å¢åŠ æ–°å›¾ä¹¦ã€‚
 			AddNewBook(p);
 			break;
 		case 2:
-			// ¿ÉÒÔĞŞ¸ÄÄ³¸öÍ¼ÊéĞÅÏ¢£¨ÊéºÅ²»ÄÜ¸Ä£©¡£
+			// å¯ä»¥ä¿®æ”¹æŸä¸ªå›¾ä¹¦ä¿¡æ¯ï¼ˆä¹¦å·ä¸èƒ½æ”¹ï¼‰ã€‚
 			break;
 		case 3:
-			// ¿ÉÒÔÉ¾³ıÄ³Ğ©Í¼ÊéĞÅÏ¢£¨·Ö±ğ°´ÊéºÅ¡¢ÊéÃû½øĞĞÉ¾³ı£©¡£
+			// å¯ä»¥åˆ é™¤æŸäº›å›¾ä¹¦ä¿¡æ¯ï¼ˆåˆ†åˆ«æŒ‰ä¹¦å·ã€ä¹¦åè¿›è¡Œåˆ é™¤ï¼‰ã€‚
 			break;
 		case 4:
-			// °´ÊéºÅ½øĞĞ²éÕÒ£¨ÒªÇóÊ¹ÓÃ¶ş·Ö²éÕÒ·¨£¬²¢Êä³öÆä²éÕÒ³¤¶È£©
+			// æŒ‰ä¹¦å·è¿›è¡ŒæŸ¥æ‰¾ï¼ˆè¦æ±‚ä½¿ç”¨äºŒåˆ†æŸ¥æ‰¾æ³•ï¼Œå¹¶è¾“å‡ºå…¶æŸ¥æ‰¾é•¿åº¦ï¼‰
 			break;
 		case 5:
-			// °´×÷Õß½øĞĞ²éÕÒ£¬Èç¹ûÓĞ¶à±¾Í¼Êé£¬ÔòÈ«²¿²éÕÒ³öÀ´¡£
+			// æŒ‰ä½œè€…è¿›è¡ŒæŸ¥æ‰¾ï¼Œå¦‚æœæœ‰å¤šæœ¬å›¾ä¹¦ï¼Œåˆ™å…¨éƒ¨æŸ¥æ‰¾å‡ºæ¥ã€‚
 			break;
 		case 6:
-			// ¿ÉÒÔ°´¼Û¸ñ·¶Î§½øĞĞ²éÕÒ£¨½á¹û°´¼Û¸ñÉıĞòÊä³ö£©¡£
+			// å¯ä»¥æŒ‰ä»·æ ¼èŒƒå›´è¿›è¡ŒæŸ¥æ‰¾ï¼ˆç»“æœæŒ‰ä»·æ ¼å‡åºè¾“å‡ºï¼‰ã€‚
 			break;
 		case 7:
-			// ²éÕÒÄ³¸ö³ö°æÉç³ö°æµÄËùÓĞÍ¼ÊéĞÅÏ¢£¬°´¼Û¸ñ½µĞòÊä³ö¡£
+			// æŸ¥æ‰¾æŸä¸ªå‡ºç‰ˆç¤¾å‡ºç‰ˆçš„æ‰€æœ‰å›¾ä¹¦ä¿¡æ¯ï¼ŒæŒ‰ä»·æ ¼é™åºè¾“å‡ºã€‚
 			break;
 		case 8:
-			// °´ÊéÃû½øĞĞÄ£ºı²éÕÒ¡£
+			// æŒ‰ä¹¦åè¿›è¡Œæ¨¡ç³ŠæŸ¥æ‰¾ã€‚
 			break;
 		case 9:
-			// Êä³öËùÓĞÍ¼ÊéĞÅÏ¢¡£
+			// è¾“å‡ºæ‰€æœ‰å›¾ä¹¦ä¿¡æ¯ã€‚
 			if (ReadStructFromFile(p) == OK) {
 				AccessNodesData(p);
 			}
 			break;
 		case 10:
-			// Í³¼Æ¡£
+			// ç»Ÿè®¡ã€‚
 			break;
 		}
 	}
@@ -447,5 +447,4 @@ int main() {
 	//InitData();
 	Console();
 }
-
 
