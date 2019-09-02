@@ -444,7 +444,7 @@ void Console() {
 }
 
 int main() {
-	//InitData();
-	Console();
+	InitData();
+	//Console();
 }
 
