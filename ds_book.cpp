@@ -646,6 +646,7 @@ void Console() {
 			break;
 		case 7:
 			// 可以按书名进行模糊查找。
+			searchbybookname(p);
 			break;
 		case 8:
 			// 输出所有图书信息。
