@@ -33,6 +33,15 @@
     <ClInclude Include="sorting.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="adding.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="editing.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="deleting.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="home.cpp">
