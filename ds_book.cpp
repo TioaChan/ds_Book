@@ -46,24 +46,16 @@ typedef struct ANode {
 	struct ANode* next;
 } ANode;
 
-// 确定第一个出版商，然后，每选择一个就遍历一遍不同出版社的数组
-
 Status ClearList(LinkList L);
-Status DestoryList(LinkList L);
-Status GetElem(LinkList L, int i, Book* e);
 Status InitList(LNode** L);
 Status InitHeadNode(LNode* L);
 Status ListInsert(LNode* L, int i, Book e);
-Status SuperListInsert(LNode* L, const char* bookName, const char* no, float price);
-
+Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, const char* author, const char* publisher, float price);
 int ListLength(LinkList L);
-int ListEmpty(LinkList L);
-
 void AccessNodesData(LNode* L);
 void BatchInsert(LNode* p);
-void CreateList_F(LinkList* L, int n);
 void JudgeResponseCode(Status ResponseCode);
-void Unit();
+
 
 #include "test.h"
 
@@ -124,32 +116,6 @@ int ListLength(LinkList L) {
 	return i;
 }
 
-/*
- * 单链表是否为空
-*/
-int ListEmpty(LNode* L) {
-	// 若L为空表，  否则返回0
-	if (L->next) { // 非空
-		return 0;
-	}
-	else {
-		return 1;
-	}
-}
-
-/*
- * 单链表是否为空
-*/
-Status DestoryList(LinkList L) {
-	LinkList p;
-	while (L) {
-		p = L;
-		L = L->next;
-		free(p);
-	}
-	return OK;
-}
-
 Status ClearList(LinkList L) {
 	// 将L重置为空表
 	LinkList p, q;
@@ -162,19 +128,6 @@ Status ClearList(LinkList L) {
 	L->next = NULL;
 	return OK;
 }
-
-Status GetElem(LinkList L, int i, Book* e) {
-	LinkList p = L->next; // 跳过头节点
-	int j = 1;
-	while (p && j < i) { // 向后扫描，直到p指向第i个元素 或p为空
-		p = p->next;
-		++j;
-	}
-	if (!p || j > i)
-		return ERROR;
-	*e = p->data; // 取第i个元素
-	return OK;
-} // GetElem
 
 Status ListInsert(LNode* L, int i, Book e) {
 	LNode* p = L;
@@ -215,16 +168,6 @@ Status ListInsert(LNode* L, int i, Book e) {
 	return OK;
 }
 
-//int ListLocate(LNode *L,LNode* p){
-//
-//	while(){
-//
-//	}
-//}
-
-/*
- * Super Insert
- */
 Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, const char* author, const char* publisher, float price) {
 	Book book = BookFactory(no, bookName, author, publisher, price);
 	if (ListInsert(L, i, book) == OK) {
@@ -249,62 +192,6 @@ Status ListDelete(LinkList L, int i) {
 	return OK;
 }
 
-//void CreateList_F(LinkList *L,int n) {
-//	*L=(LNode*)malloc(sizeof(LNode));
-//	(*L)->next=NULL; // 先建立一个带头结点的单链表
-//
-//	InitHeadNode(*L); // 头节点初始化
-//
-//	int i;
-//	for(i=n; i>0; i--) {
-//		LNode *p=(LNode*)malloc(sizeof(LNode));
-//		const char*no,*bookName,*author,*publisher;
-//		// 要输入字符串使用字符数组，而不能使用字符指针
-//		float price;
-//		cout<<"请输入书号、书名、作者（1个）、出版社、价格";
-//		cin>>price;
-//		printf("Log");
-//		Book book;
-//		book.no=no;
-//		book.bookName=bookName;
-//		book.author=author;
-//		book.publisher=publisher;
-//		book.price=price;
-//		p->data=book;
-//		p->next=(*L)->next;
-//		(*L)->next=p;
-//	}
-//} // CreateList_F
-
-//void CreateList_L(LinkList *L,int n) {
-//	// 正位序输入n个元素的值，建立带头结点的单链表L
-//	*L=(LNode*)malloc(sizeof(LNode));
-//	(*L)->next=NULL;
-//	InitHeadNode(*L);
-//	LNode *r=*L;  // 尾指针r指向头节点
-//	int i;
-//	for(i=0; i<n; i++) {
-//		LNode *l=(LNode*)malloc(sizeof(LNode)); // 生成新结点
-//		char bookName[50];
-//		char no[20];
-//		float price;
-//		printf("请输入书名，ISBN，价格：");
-//		scanf("%s %s %f",bookName,no,&price);
-//		Book book;
-//		strcpy(book.bookName,bookName);
-//		strcpy(book.no,no);
-//		printf("%s",book.bookName);
-//		book.price=price;
-//		// 输入元素值
-//		printf("Log");
-//		l->data=book;
-//		l->next=NULL;
-//		r->next=l; // 插入到表尾部
-//		r=l; //r指向新的尾结点
-//	}
-//}
-
-
 void AccessNodesData(LNode* L) {
 	LNode* p = L;
 	printf("头节点信息为：\n");
@@ -315,43 +202,6 @@ void AccessNodesData(LNode* L) {
 		p = p->next;
 	} while (p != NULL); // !! 注意是p!=NULL 而不是p->next!=NULL
 }
-
-//void SortPublisher(LNode* L) {
-//	LNode* p=L;
-//	p=p->next; // 跑出头节点
-//	int length=ListLength(L);
-//	Publisher* pu=new Publisher[length];
-//	pu[0].pName=p->data.publisher;
-//	pu[0].count=0;
-//	pu[0].count++;
-//	for(int i=1; i<length; i++) {
-//		pu[i].pName="###";
-//		pu[i].count=0;
-//	}
-//	while(p) {
-//		p=p->next;
-//		int exist=1;
-//		for(int i=0; i<length; i++) {
-//			if(p->data.publisher==pu[i].pName) {
-//				pu[i].count++;
-//				exist=0;
-//			}
-//		}
-//		if(exist=1) {
-//			for(int i=0; i<length; i++) {
-//				if(pu[i].count==0) {
-//					pu[i].pName=p->data.publisher;
-//					pu[i].count++;
-//					break;
-//				}
-//			}
-//		}
-//	}
-//	for(int i=1; i<length; i++) {
-//		cout<<pu[i].pName<<endl;
-//		cout<<pu[i].count<<endl;
-//	}
-//}
 
 void JudgeResponseCode(Status ResponseCode) {
 	switch (ResponseCode) {
@@ -858,46 +708,6 @@ void SearchBookByAuthor(LNode* L) {
 		}
 	}
 	AccessNodesData(waitSortList);
-}
-void Unit() {
-	//	LNode l;	  // LNode结构体
-	LNode* p;  // p为指向LNode的指针体
-	LNode** q = &p; // q指向指针的指针
-
-	/* 初始化指针需要给入 指向指针的指针，通过指向指针的指针来改变指针的地址
-	 * 这里是通过二级指针传递
-	 */
-	InitList(q);
-
-	/*
-	 * 批量插入数据
-	 */
-	BatchInsert(p);
-	AccessNodesData(p);
-
-	/*
-	 * 测试获得元素
-	 */
-	Book* b = (Book*)malloc(sizeof(Book));
-	GetElem(p, 3, b);
-	printf("GetElem获取的数据为:%s %s %.0f\n", b->bookName, b->no, b->price);
-
-	/*
-	 * 删除元素
-	 */
-	JudgeResponseCode(ListDelete(p, 8));
-	AccessNodesData(p);
-}
-
-void Unit_v2() {
-	printf("Unit_V2\n");
-	LNode q;
-	LNode* p = &q;
-	LNode** L = &p;
-	//CreateList_L(L,3);
-//	CreateList_F(L,3);
-
-	AccessNodesData(*L);
 }
 
 void Unit_v3() {
