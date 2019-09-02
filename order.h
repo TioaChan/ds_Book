@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include"sort.h"
+#include"sorting.h"
 
 void orderbyPublisherAndAuthor(LNode* L) {
 	LinkList searchresult = new LNode;

@@ -3,6 +3,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<iostream>
+#include<io.h>
 using namespace std;
 
 #define OK 1
@@ -163,8 +164,6 @@ Status ReadStructFromFile(LNode* L) {
 	fclose(pf);
 	return OK;
 }
-
-
 
 Status AddNewBook(LNode* L) {
 	float price;
@@ -409,6 +408,14 @@ void Console() {
 }
 
 int main() {
-	//InitData();
-	Console();
+	if (((_access("a.dat", 0)) != -1)&&(_filelength(_open("a.dat", 0x0100)) > 0))//文件存在且文件大小大于0
+	{
+		Console();
+	}
+	else
+	{
+		InitData();
+		Console();
+	}
+
 }

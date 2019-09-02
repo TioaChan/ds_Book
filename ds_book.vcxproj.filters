@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sort.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="InitData.h">
       <Filter>源文件</Filter>
     </ClInclude>
@@ -31,6 +28,9 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="counting.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sorting.h">
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
