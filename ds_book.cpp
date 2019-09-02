@@ -36,7 +36,7 @@ struct Author {
 	int count;
 };
 
-#include "test.h"
+
 // 确定第一个出版商，然后，每选择一个就遍历一遍不同出版社的数组
 
 Status ClearList(LinkList L);
@@ -55,6 +55,9 @@ void BatchInsert(LNode* p);
 void CreateList_F(LinkList* L, int n);
 void JudgeResponseCode(Status ResponseCode);
 void Unit();
+
+#include "test.h"
+
 
 Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
 	Book book;

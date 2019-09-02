@@ -154,6 +154,7 @@
     <ClCompile Include="ds_book.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="sort.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
