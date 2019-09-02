@@ -36,6 +36,7 @@ struct Author {
 	int count;
 };
 
+#include "test.h"
 // 确定第一个出版商，然后，每选择一个就遍历一遍不同出版社的数组
 
 Status ClearList(LinkList L);
@@ -53,6 +54,7 @@ void AccessNodesData(LNode* L);
 void BatchInsert(LNode* p);
 void CreateList_F(LinkList* L, int n);
 void JudgeResponseCode(Status ResponseCode);
+void Unit();
 
 Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
 	Book book;
@@ -209,10 +211,6 @@ Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, co
 	if (ListInsert(L, i, book) == OK) {
 		return OK;
 	}
-	else
-	{
-		return ERROR;
-	}
 }
 
 Status ListDelete(LinkList L, int i) {
@@ -231,6 +229,62 @@ Status ListDelete(LinkList L, int i) {
 	free(q);
 	return OK;
 }
+
+//void CreateList_F(LinkList *L,int n) {
+//	*L=(LNode*)malloc(sizeof(LNode));
+//	(*L)->next=NULL; // 先建立一个带头结点的单链表
+//
+//	InitHeadNode(*L); // 头节点初始化
+//
+//	int i;
+//	for(i=n; i>0; i--) {
+//		LNode *p=(LNode*)malloc(sizeof(LNode));
+//		const char*no,*bookName,*author,*publisher;
+//		// 要输入字符串使用字符数组，而不能使用字符指针
+//		float price;
+//		cout<<"请输入书号、书名、作者（1个）、出版社、价格";
+//		cin>>price;
+//		printf("Log");
+//		Book book;
+//		book.no=no;
+//		book.bookName=bookName;
+//		book.author=author;
+//		book.publisher=publisher;
+//		book.price=price;
+//		p->data=book;
+//		p->next=(*L)->next;
+//		(*L)->next=p;
+//	}
+//} // CreateList_F
+
+//void CreateList_L(LinkList *L,int n) {
+//	// 正位序输入n个元素的值，建立带头结点的单链表L
+//	*L=(LNode*)malloc(sizeof(LNode));
+//	(*L)->next=NULL;
+//	InitHeadNode(*L);
+//	LNode *r=*L;  // 尾指针r指向头节点
+//	int i;
+//	for(i=0; i<n; i++) {
+//		LNode *l=(LNode*)malloc(sizeof(LNode)); // 生成新结点
+//		char bookName[50];
+//		char no[20];
+//		float price;
+//		printf("请输入书名，ISBN，价格：");
+//		scanf("%s %s %f",bookName,no,&price);
+//		Book book;
+//		strcpy(book.bookName,bookName);
+//		strcpy(book.no,no);
+//		printf("%s",book.bookName);
+//		book.price=price;
+//		// 输入元素值
+//		printf("Log");
+//		l->data=book;
+//		l->next=NULL;
+//		r->next=l; // 插入到表尾部
+//		r=l; //r指向新的尾结点
+//	}
+//}
+
 
 void AccessNodesData(LNode* L) {
 	LNode* p = L;
@@ -363,14 +417,143 @@ Status AddNewBook(LNode* L) {
 	return OK;
 }
 
-void InitData() {//初始化数据 
+Status ChangeBookInfo(LNode* L) {
+	LNode* p = L->next;
+	char inputNo[50];
+	int inputOption = 0, flag = 0;
+	cout << "请输入需要修改的书号" << endl;
+	cin >> inputNo;
+	while (p) {
+		if (strcmp(p->data.no, inputNo) == 0) {
+			break;
+		}
+		p = p->next;
+	}
+	if (p) {
+		while (1) {
+			cout << "请输入需要修改的数据 1.书名 2.作者 3.出版社 4.价钱 5.退出" << endl;
+			cin >> inputOption;
+			switch (inputOption) {
+			case 1:
+				char bookname[50];
+				cout << "请输入书名:";
+				cin >> bookname;
+				strcpy(p->data.bookName, bookname);
+				// 修改书名
+				break;
+			case 2:
+				char author[50];
+				cout << "请输入作者:";
+				cin >> author;
+				strcpy(p->data.author, author);
+				// 修改作者
+				break;
+			case 3:
+				char publisher[50];
+				cout << "请输入出版社:";
+				cin >> publisher;
+				strcpy(p->data.publisher, publisher);
+				// 修改出版社
+				break;
+			case 4:
+				float price;
+				cout << "请输入价格:";
+				cin >> price;
+				p->data.price = price;
+				// 修改价钱
+				break;
+			}
+			if (inputOption == 5) {
+				WriteStructToFile(L);
+				return OK;
+				break;
+			}
+		}
+	}
+	else {
+		cout << "没有找到书号" << endl;
+		return ERROR;
+	}
+}
+
+Status DeleteBookInfo(LNode* L) {
+	char inputNo[50];
+	int i = 1;
+	LNode* p = L->next;
+	cout << "请输入需要删除的书号" << endl;
+	cin >> inputNo;
+	while (p) {
+		if (strcmp(p->data.no, inputNo) == 0) {
+			break;
+		}
+		p = p->next;
+		i++;
+	}
+	if (p) {
+		ListDelete(L, i);
+		WriteStructToFile(L);
+		return OK;
+	}
+	else {
+		return ERROR;
+	}
+}
+
+//Status SearchBook(LNode* L) {
+//
+//}
+
+void Unit() {
 	//	LNode l;	  // LNode结构体
 	LNode* p;  // p为指向LNode的指针体
 	LNode** q = &p; // q指向指针的指针
+
 	/* 初始化指针需要给入 指向指针的指针，通过指向指针的指针来改变指针的地址
 	 * 这里是通过二级指针传递
 	 */
 	InitList(q);
+
+	/*
+	 * 批量插入数据
+	 */
+	BatchInsert(p);
+	AccessNodesData(p);
+
+	/*
+	 * 测试获得元素
+	 */
+	Book* b = (Book*)malloc(sizeof(Book));
+	GetElem(p, 3, b);
+	printf("GetElem获取的数据为:%s %s %.0f\n", b->bookName, b->no, b->price);
+
+	/*
+	 * 删除元素
+	 */
+	JudgeResponseCode(ListDelete(p, 8));
+	AccessNodesData(p);
+}
+
+void Unit_v2() {
+	printf("Unit_V2\n");
+	LNode q;
+	LNode* p = &q;
+	LNode** L = &p;
+	//CreateList_L(L,3);
+//	CreateList_F(L,3);
+
+	AccessNodesData(*L);
+}
+
+void Unit_v3() {
+	//	LNode l;	  // LNode结构体
+	LNode* p;  // p为指向LNode的指针体
+	LNode** q = &p; // q指向指针的指针
+
+	/* 初始化指针需要给入 指向指针的指针，通过指向指针的指针来改变指针的地址
+	 * 这里是通过二级指针传递
+	 */
+	InitList(q);
+
 	/*
 	 * 批量插入数据
 	 */
@@ -382,6 +565,15 @@ void InitData() {//初始化数据
 		cout << "读取数据成功" << endl;
 	}
 	AccessNodesData(p);
+
+	//	Book book;
+	//	strcpy(book.no,"222");
+	//	strcpy(book.bookName,"IamComing");
+	//	strcpy(book.author,"zz");
+	//	strcpy(book.publisher,"test");
+	//	book.price=10;
+	//
+	//	AddNewBooks(p,book);
 }
 
 void Console() {
@@ -390,19 +582,30 @@ void Console() {
 	LNode* p;  // p为指向LNode的指针体
 	LNode** q = &p; // q指向指针的指针
 	InitList(q);
+	//
 	ReadStructFromFile(p);
+
+	//	Book book;
+	//	strcpy(book.no,"222");
+	//	strcpy(book.bookName,"IamComing");
+	//	strcpy(book.author,"zz");
+	//	strcpy(book.publisher,"test");
+	//	book.price=10;
+	//
+	//	AddNewBooks(p,book);
+	//	AccessNodesData(p);
+
 	while (1) {
 		int input = 0;
 		cout << "1.增加图书" <<
 			endl << "2.修改图书信息" <<
 			endl << "3.删除指定图书" <<
-			endl << "4.按照书号查找" <<
-			endl << "5.按照作者查找" <<
-			endl << "6.按照价格范围查找" <<
-			endl << "7.查找某个作者出版的所有信息，按价格升序输出 " <<
-			endl << "8.书名模糊查找" <<
-			endl << "9 输出图书所有信息" <<
-			endl << "10.统计" << endl << endl;
+			endl << "4.查询图书信息" <<
+			endl << "5.按照价格范围查找" <<
+			endl << "6.查找某个作者出版的所有信息，按价格升序输出 " <<
+			endl << "7.书名模糊查找" <<
+			endl << "8 输出图书所有信息" <<
+			endl << "9.统计" << endl << endl;
 		cin >> input;
 		switch (input) {
 		case 1:
@@ -410,41 +613,54 @@ void Console() {
 			AddNewBook(p);
 			break;
 		case 2:
+			if (ChangeBookInfo(p) == OK) {
+				cout << "修改成功" << endl;
+			}
+			else {
+				cout << "修改失败" << endl;
+			}
 			// 可以修改某个图书信息（书号不能改）。
 			break;
 		case 3:
+			if (DeleteBookInfo(p) == OK) {
+				cout << "删除成功" << endl;
+			}
+			else {
+				cout << "删除失败" << endl;
+			}
 			// 可以删除某些图书信息（分别按书号、书名进行删除）。
 			break;
 		case 4:
-			// 按书号进行查找（要求使用二分查找法，并输出其查找长度）
+
+			// 可以按书号或书名进行精确查找（按书名查找时，如果有多本图书，则全部查找出来，并输出其查找长度）。
 			break;
 		case 5:
-			// 按作者进行查找，如果有多本图书，则全部查找出来。
+			// 可以按价格范围进行查找（结果按价格降序输出）。
 			break;
 		case 6:
-			// 可以按价格范围进行查找（结果按价格升序输出）。
+			searchbyauthor(p);
+			// 查找某个作者出版的所有图书信息，按价格升序输出。
 			break;
 		case 7:
-			// 查找某个出版社出版的所有图书信息，按价格降序输出。
+			// 可以按书名进行模糊查找。
 			break;
 		case 8:
-			// 按书名进行模糊查找。
-			break;
-		case 9:
 			// 输出所有图书信息。
 			if (ReadStructFromFile(p) == OK) {
 				AccessNodesData(p);
 			}
 			break;
-		case 10:
+		case 9:
 			// 统计。
+			break;
+		default:
+			cout << "输入错误，轻重新输入" << endl;
 			break;
 		}
 	}
 }
 
 int main() {
-	InitData();
-	//Console();
+	// Unit_v3();
+	Console();
 }
-
