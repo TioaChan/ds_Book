@@ -672,7 +672,7 @@ void Console1() {
 	InitList(q);
 	//
 	ReadStructFromFile(p);
-	orderbyPublisherAndAuthor(p);
+	orderbyAuthorAndPrice(p);
 }
 
 
