@@ -1,5 +1,4 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -26,16 +25,26 @@ typedef struct LNode {
 } LNode, * LinkList;
 // *LinkList为Lnode类型的指针
 
-struct Publisher {
-	char pName[15];
+typedef struct {
+	char pName[50];
 	int count;
-};
+} Publisher;
 
-struct Author {
-	char aName[15];
+typedef struct PNode {
+	Publisher data;
+	struct PNode* next;
+} PNode;
+
+
+typedef struct {
+	char aName[50];
 	int count;
-};
+} Author;
 
+typedef struct ANode {
+	Author data;
+	struct ANode* next;
+} ANode;
 
 // 确定第一个出版商，然后，每选择一个就遍历一遍不同出版社的数组
 
@@ -206,6 +215,13 @@ Status ListInsert(LNode* L, int i, Book e) {
 	return OK;
 }
 
+//int ListLocate(LNode *L,LNode* p){
+//
+//	while(){
+//
+//	}
+//}
+
 /*
  * Super Insert
  */
@@ -356,14 +372,18 @@ void JudgeResponseCode(Status ResponseCode) {
 
 void BatchInsert(LNode* p) {
 	printf("==================================初始化数据=====================================\n");
-	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "张三", "清华出版社", 100.0));
-	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "李四", "工业出版社", 200.0));
-	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "王五", "北大出版社", 300.0));
+	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "张三", "清华出版社", 520.0));
+	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "李四", "工业出版社", 320.0));
+	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "王五", "北大出版社", 700.0));
 	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "赵六", "高等教育出版社", 660.0));
 	JudgeResponseCode(SuperListInsert(p, 5, "005", "计算机网络", "小明", "A出版社", 780.0));
-	JudgeResponseCode(SuperListInsert(p, 6, "006", "计算机操作系统", "小红", "B出版社", 120.0));
-	JudgeResponseCode(SuperListInsert(p, 7, "007", "数据结构", "小蓝", "郑大出版社", 140.0));
-	JudgeResponseCode(SuperListInsert(p, 8, "008", "C++从入门到放弃", "小智", "河南工程出版社", 180.0));
+	JudgeResponseCode(SuperListInsert(p, 6, "006", "数据结构", "小明", "A出版社", 680.0));
+	JudgeResponseCode(SuperListInsert(p, 7, "007", "计算机操作系统", "小红", "B出版社", 220.0));
+	JudgeResponseCode(SuperListInsert(p, 8, "008", "数据结构", "小蓝", "郑大出版社", 140.0));
+	JudgeResponseCode(SuperListInsert(p, 9, "009", "C++从入门到放弃", "小智", "河南工程出版社", 380.0));
+	JudgeResponseCode(SuperListInsert(p, 10, "010", "C++从入门到放弃", "小芳", "河南工程出版社", 180.0));
+	JudgeResponseCode(SuperListInsert(p, 11, "011", "C++从入门到放弃", "小梨", "河南工程出版社", 180.0));
+	JudgeResponseCode(SuperListInsert(p, 12, "012", "安卓从入门到放弃", "小明", "A出版社", 180.0));
 	printf("当前一共有%d个数据\n", ListLength(p));
 	printf("==================================初始化数据=====================================\n\n");
 }
@@ -375,7 +395,7 @@ Status WriteStructToFile(LNode* L) {
 	if ((pf = (fopen(".\\a.dat", "w+"))) == 0)
 		return ERROR;
 	while (p) {
-		fprintf(pf, "\n%s %s %s %s %f", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+		fprintf(pf, "%s %s %s %s %f\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
 		p = p->next;
 		count++;
 	}
@@ -401,13 +421,170 @@ Status ReadStructFromFile(LNode* L) {
 	return OK;
 }
 
+void Statistics(LNode* L) {
+	// 统计
+	int inputOption;
+	while (1) {
+		cout << "1.统计出版社图书出版总数，按升序输出 2.统计作者出版图书总数，按降序输出 3.退出" << endl;
+		cin >> inputOption;
+		if (inputOption == 3) {
+			break;
+		}
+		switch (inputOption) {
+		case 1: {
+			// 统计出版社
+			PNode* waitSort = new PNode;
+			LNode* p = L->next;
+			PNode* pw = waitSort;
+			PNode* pre = waitSort;
+			strcpy(pw->data.pName, "###");
+			pw->next = NULL;
+			pw->data.count = 0;
+			while (p) {
+				int flag = 1;
+				while (pw) {
+					if (strcmp(pw->data.pName, p->data.publisher) == 0) {
+						flag = 0;
+					}
+					pre = pw;
+					pw = pw->next;
+				}
+
+				if (flag == 1) {
+					PNode* q = new PNode;
+					strcpy(q->data.pName, p->data.publisher);
+					q->next = NULL;
+					q->data.count = 0;
+					pre->next = q;
+				}
+				pw = waitSort->next;
+				p = p->next;
+			}
+			pw = waitSort->next;
+			p = L->next;
+			while (pw) {
+				p = L->next;
+				while (p) {
+					if (strcmp(pw->data.pName, p->data.publisher) == 0) {
+						pw->data.count++;
+					}
+					p = p->next;
+				}
+				pw = pw->next;
+			}
+			pw = waitSort->next;
+			Publisher t;
+			for (PNode* temp = waitSort->next; temp->next != NULL; temp = temp->next) {
+				for (PNode* pn = waitSort->next; pn->next != NULL; pn = pn->next) {
+					if (pn->data.count > pn->next->data.count) {
+						t = pn->data;
+						pn->data = pn->next->data;
+						pn->next->data = t;
+					}
+				}
+			}
+			while (pw) {
+				cout << pw->data.pName << ":" << pw->data.count << endl;;
+				pw = pw->next;
+			}
+			break;
+		}
+		case 2: {
+			// 统计出版社
+			ANode* waitSort = new ANode;
+			LNode* p = L->next;
+			ANode* pw = waitSort;
+			ANode* pre = waitSort;
+			strcpy(pw->data.aName, "###");
+			pw->next = NULL;
+			pw->data.count = 0;
+			while (p) {
+				int flag = 1;
+				while (pw) {
+					if (strcmp(pw->data.aName, p->data.author) == 0) {
+						flag = 0;
+					}
+					pre = pw;
+					pw = pw->next;
+				}
+
+				if (flag == 1) {
+					ANode* q = new ANode;
+					strcpy(q->data.aName, p->data.author);
+					q->next = NULL;
+					q->data.count = 0;
+					pre->next = q;
+				}
+				pw = waitSort->next;
+				p = p->next;
+			}
+			pw = waitSort->next;
+			p = L->next;
+
+			while (pw) {
+				p = L->next;
+				while (p) {
+
+					if (strcmp(pw->data.aName, p->data.author) == 0) {
+						pw->data.count++;
+					}
+					p = p->next;
+				}
+				pw = pw->next;
+			}
+			pw = waitSort->next;
+			Author t;
+			for (ANode* temp = waitSort->next; temp->next != NULL; temp = temp->next) {
+				for (ANode* pn = waitSort->next; pn->next != NULL; pn = pn->next) {
+					if (pn->data.count < pn->next->data.count) {
+						t = pn->data;
+						pn->data = pn->next->data;
+						pn->next->data = t;
+					}
+				}
+			}
+			while (pw) {
+				cout << pw->data.aName << ":" << pw->data.count << endl;;
+				pw = pw->next;
+			}
+			break;
+		}
+		case 3:
+			break;
+		default:
+			cout << "请重新输入数字" << endl;
+			break;
+		}
+	}
+}
+
 Status AddNewBook(LNode* L) {
 	float price;
-	char no[50], name[50], au[50], pub[50];
+	int flag; // 检测no
 	LNode* p = L->next;
+	char name[50], au[50], pub[50], no[50];
+
 	cout << "请分别输入书号、书名、作者（1个）、出版社、价格五个部分" << endl;
 	int length = ListLength(L);
 	cin >> no >> name >> au >> pub >> price;
+	while (1) {
+		flag = 1;
+		while (p) {
+			if (strcmp(no, p->data.no) == 0) {
+				flag = 0;
+				break;
+			}
+			p = p->next;
+		}
+		p = L->next;
+		if (flag == 0) {
+			cout << "书号重复,请重新输入书号:";
+			cin >> no;
+		}
+		else {
+			break;
+		}
+	}
 	Book e = BookFactory(no, name, au, pub, price);
 	for (int i = 0; i < length - 1; i++) {
 		p = p->next;
@@ -421,7 +598,7 @@ Status AddNewBook(LNode* L) {
 }
 
 Status ChangeBookInfo(LNode* L) {
-	LNode* p = L->next;
+	LNode* p=L->next;
 	char inputNo[50];
 	int inputOption = 0, flag = 0;
 	cout << "请输入需要修改的书号" << endl;
@@ -465,6 +642,11 @@ Status ChangeBookInfo(LNode* L) {
 				p->data.price = price;
 				// 修改价钱
 				break;
+			case 5:
+				break;
+			default:
+				cout << "请重新输入数字" << endl;
+				break;
 			}
 			if (inputOption == 5) {
 				WriteStructToFile(L);
@@ -479,33 +661,204 @@ Status ChangeBookInfo(LNode* L) {
 	}
 }
 
-Status DeleteBookInfo(LNode* L) {
+void DeleteBookInfo(LNode* L) {
 	char inputNo[50];
+	int intOption = 0;
 	int i = 1;
-	LNode* p = L->next;
-	cout << "请输入需要删除的书号" << endl;
-	cin >> inputNo;
-	while (p) {
-		if (strcmp(p->data.no, inputNo) == 0) {
+	LNode* p;
+	LNode* pre = new LNode;
+	while (1) {
+		cout << "请输入需要删除的信息 1.书号 2.书名 3.退出" << endl;
+		cin >> intOption;
+		if (intOption == 3) {
 			break;
 		}
-		p = p->next;
-		i++;
+		switch (intOption) {
+		case 1:
+			// 按书号删除
+			cout << "请输入书号:";
+			cin >> inputNo;
+			p = L->next;
+			i = 1;
+			while (p) {
+				if (strcmp(p->data.no, inputNo) == 0) {
+					break;
+				}
+				p = p->next;
+				i++;
+			}
+			if (p) {
+				ListDelete(L, i);
+				WriteStructToFile(L);
+				cout << "删除成功" << endl;
+			}
+			else {
+				cout << "删除失败,没有找到书籍信息";
+			}
+			break;
+		case 2: {
+			// 按书名删除
+			char bookName[50];
+			int flag = 0;
+			cout << "请输入书名:";
+			cin >> bookName;
+			p = L->next;
+			pre = L;
+			while (p) {
+				if (strcmp(p->data.bookName, bookName) == 0) {
+					pre->next = p->next;
+					free(p);
+					p = pre;
+					flag = 1;
+				}
+				pre = p;
+				p = p->next;
+			}
+			if (flag == 1) {
+				WriteStructToFile(L);
+				cout << "删除成功" << endl;
+			}
+			else {
+				cout << "没有找到需要找到的书籍" << endl;
+			}
+			break;
+		}
+		case 3:
+			break;
+		default:
+			cout << "请重新输入数字" << endl;
+			break;
+		}
 	}
-	if (p) {
-		ListDelete(L, i);
-		WriteStructToFile(L);
-		return OK;
-	}
-	else {
-		return ERROR;
+
+}
+
+void SearchBook(LNode* L) {
+	LNode* p;
+	int inputOption = 0;
+	while (1) {
+		cout << "请输入查找信息 1.书号 2.书名 3.退出" << endl;
+		cin >> inputOption;
+		if (inputOption == 3) {
+			break;
+		}
+		switch (inputOption) {
+		case 1:
+			p=L->next;
+			// 通过书号精确查找
+			char inputNo[50];
+			cout << "请输入书号:";
+			cin >> inputNo;
+			while (p) {
+				if (strcmp(inputNo, p->data.no) == 0) {
+					break;
+				};
+				p = p->next;
+			}
+			if (p) {
+				printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+			}
+			else {
+				cout << "没找到" << endl;
+			}
+			break;
+		case 2: {
+			p = L->next;
+			char bookName[50];
+			int flag = 0, count = 0;
+			cout << "请输入书名:";
+			cin >> bookName;
+			while (p) {
+				if (strcmp(bookName, p->data.bookName) == 0) {
+					printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
+					flag = 1;
+					count++;
+				};
+				p = p->next;
+			}
+			if (flag == 0) {
+				cout << "没找到" << endl;
+			}
+			cout << "查找长度为" << count << endl;
+			// 通过书名精确查找
+			break;
+		}
+		default:
+			cout << "请重新输入数字" << endl;
+			break;
+		}
 	}
 }
 
-//Status SearchBook(LNode* L) {
-//
-//}
+void SearchBookByPrice(LNode* L) {
+	float min = 0, max = 0;
+	LNode* p = L->next;
+	LNode* waitSortList = new LNode;
+	InitHeadNode(waitSortList);
+	LNode* pw = waitSortList;
+	cout << "请输入一个最小和最大的价格:";
+	cin >> min >> max;
+	if (min > max) {
+		int temp;
+		temp=min;
+		min=max;
+		max=temp;
+	}
+	while (p) {
+		if (p->data.price <= max && p->data.price >= min) {
+			LNode *temp=new LNode;
+			temp->data=p->data;
+			pw->next=temp;
+			//pw->next = p;
+			pw = pw->next;
+		}
+		p = p->next;
+	}
+	Book t;
+	pw->next = NULL;
+	for (LNode* temp = waitSortList->next; temp->next != NULL; temp = temp->next) {
+		for (LNode* p = waitSortList->next; p->next != NULL; p = p->next) {
+			if (p->data.price < p->next->data.price) {
+				t = p->data;
+				p->data = p->next->data;
+				p->next->data = t;
+			}
+		}
+	}
+	AccessNodesData(waitSortList);
+}
 
+void SearchBookByAuthor(LNode* L) {
+	char author[50];
+	LNode* p = L->next;
+	LNode* waitSortList = new LNode;
+	InitHeadNode(waitSortList);
+	LNode* pw = waitSortList;
+	cout << "请输入一个作者名字:";
+	cin >> author;
+	while (p) {
+		if (strcmp(author, p->data.author) == 0) {
+			LNode* temp = new LNode;
+			temp->data = p->data;
+			pw->next = temp;
+			//pw->next = p;
+			pw = pw->next;
+		}
+		p = p->next;
+	}
+	Book t;
+	pw->next = NULL;
+	for (LNode* temp = waitSortList->next; temp->next != NULL; temp = temp->next) {
+		for (LNode* p = waitSortList->next; p->next != NULL; p = p->next) {
+			if (p->data.price > p->next->data.price) {
+				t = p->data;
+				p->data = p->next->data;
+				p->next->data = t;
+			}
+		}
+	}
+	AccessNodesData(waitSortList);
+}
 void Unit() {
 	//	LNode l;	  // LNode结构体
 	LNode* p;  // p为指向LNode的指针体
@@ -569,14 +922,7 @@ void Unit_v3() {
 	}
 	AccessNodesData(p);
 
-	//	Book book;
-	//	strcpy(book.no,"222");
-	//	strcpy(book.bookName,"IamComing");
-	//	strcpy(book.author,"zz");
-	//	strcpy(book.publisher,"test");
-	//	book.price=10;
-	//
-	//	AddNewBooks(p,book);
+
 }
 
 void Console() {
@@ -585,19 +931,7 @@ void Console() {
 	LNode* p;  // p为指向LNode的指针体
 	LNode** q = &p; // q指向指针的指针
 	InitList(q);
-	//
 	ReadStructFromFile(p);
-
-	//	Book book;
-	//	strcpy(book.no,"222");
-	//	strcpy(book.bookName,"IamComing");
-	//	strcpy(book.author,"zz");
-	//	strcpy(book.publisher,"test");
-	//	book.price=10;
-	//
-	//	AddNewBooks(p,book);
-	//	AccessNodesData(p);
-
 	while (1) {
 		int input = 0;
 		cout << "1.增加图书" <<
@@ -625,36 +959,34 @@ void Console() {
 			// 可以修改某个图书信息（书号不能改）。
 			break;
 		case 3:
-			if (DeleteBookInfo(p) == OK) {
-				cout << "删除成功" << endl;
-			}
-			else {
-				cout << "删除失败" << endl;
-			}
+			DeleteBookInfo(p);
 			// 可以删除某些图书信息（分别按书号、书名进行删除）。
 			break;
 		case 4:
-
+			SearchBook(p);
 			// 可以按书号或书名进行精确查找（按书名查找时，如果有多本图书，则全部查找出来，并输出其查找长度）。
 			break;
 		case 5:
+			SearchBookByPrice(p);
 			// 可以按价格范围进行查找（结果按价格降序输出）。
 			break;
 		case 6:
-			searchbyauthor(p);
+			// searchbyauthor(p);
+			 SearchBookByAuthor(p);
 			// 查找某个作者出版的所有图书信息，按价格升序输出。
 			break;
-		case 7:
+		case 7:searchbybookname(p);
 			// 可以按书名进行模糊查找。
-			searchbybookname(p);
 			break;
 		case 8:
 			// 输出所有图书信息。
-			if (ReadStructFromFile(p) == OK) {
-				AccessNodesData(p);
-			}
+			
+			
+			orderbyPublisherAndAuthor(p);
+			orderbyAuthorAndPrice(p);
 			break;
 		case 9:
+			Statistics(p);
 			// 统计。
 			break;
 		default:
@@ -664,19 +996,7 @@ void Console() {
 	}
 }
 
-void Console1() {
-	cout << "欢迎来到图书管理软件Ver1.0版本" << endl;
-
-	LNode* p;  // p为指向LNode的指针体
-	LNode** q = &p; // q指向指针的指针
-	InitList(q);
-	//
-	ReadStructFromFile(p);
-	orderbyAuthorAndPrice(p);
-}
-
-
 int main() {
-	// Unit_v3();
-	Console1();
+	//Unit_v3();
+	Console();
 }
