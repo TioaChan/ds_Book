@@ -15,16 +15,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ds_book.cpp">
+    <ClInclude Include="sort.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InitData.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="search.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="order.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="home.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="test.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="sort.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

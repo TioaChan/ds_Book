@@ -11,6 +11,7 @@ using namespace std;
 #define MAXSIZE 200
 
 typedef int Status;
+
 typedef struct {
 	char no[50];
 	char bookName[50];
@@ -22,8 +23,8 @@ typedef struct {
 typedef struct LNode {
 	Book data; // 数据域
 	struct LNode* next; // 指针域
-} LNode, * LinkList;
-// *LinkList为Lnode类型的指针
+} LNode, * LinkList;// *LinkList为Lnode类型的指针
+
 
 typedef struct {
 	char pName[50];
@@ -55,9 +56,14 @@ int ListLength(LinkList L);
 void AccessNodesData(LNode* L);
 void BatchInsert(LNode* p);
 void JudgeResponseCode(Status ResponseCode);
+Status WriteStructToFile(LNode* L);
+Status ReadStructFromFile(LNode* L);
+void Console();
 
 
-#include "test.h"
+#include"order.h"
+#include"InitData.h"
+#include"search.h"
 
 
 Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
@@ -218,24 +224,6 @@ void JudgeResponseCode(Status ResponseCode) {
 		printf("No ResponseCode\n");
 		break;
 	}
-}
-
-void BatchInsert(LNode* p) {
-	printf("==================================初始化数据=====================================\n");
-	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "张三", "清华出版社", 520.0));
-	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "李四", "工业出版社", 320.0));
-	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "王五", "北大出版社", 700.0));
-	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "赵六", "高等教育出版社", 660.0));
-	JudgeResponseCode(SuperListInsert(p, 5, "005", "计算机网络", "小明", "A出版社", 780.0));
-	JudgeResponseCode(SuperListInsert(p, 6, "006", "数据结构", "小明", "A出版社", 680.0));
-	JudgeResponseCode(SuperListInsert(p, 7, "007", "计算机操作系统", "小红", "B出版社", 220.0));
-	JudgeResponseCode(SuperListInsert(p, 8, "008", "数据结构", "小蓝", "郑大出版社", 140.0));
-	JudgeResponseCode(SuperListInsert(p, 9, "009", "C++从入门到放弃", "小智", "河南工程出版社", 380.0));
-	JudgeResponseCode(SuperListInsert(p, 10, "010", "C++从入门到放弃", "小芳", "河南工程出版社", 180.0));
-	JudgeResponseCode(SuperListInsert(p, 11, "011", "C++从入门到放弃", "小梨", "河南工程出版社", 180.0));
-	JudgeResponseCode(SuperListInsert(p, 12, "012", "安卓从入门到放弃", "小明", "A出版社", 180.0));
-	printf("当前一共有%d个数据\n", ListLength(p));
-	printf("==================================初始化数据=====================================\n\n");
 }
 
 Status WriteStructToFile(LNode* L) {
@@ -583,161 +571,9 @@ void DeleteBookInfo(LNode* L) {
 
 }
 
-void SearchBook(LNode* L) {
-	LNode* p;
-	int inputOption = 0;
-	while (1) {
-		cout << "请输入查找信息 1.书号 2.书名 3.退出" << endl;
-		cin >> inputOption;
-		if (inputOption == 3) {
-			break;
-		}
-		switch (inputOption) {
-		case 1:
-			p=L->next;
-			// 通过书号精确查找
-			char inputNo[50];
-			cout << "请输入书号:";
-			cin >> inputNo;
-			while (p) {
-				if (strcmp(inputNo, p->data.no) == 0) {
-					break;
-				};
-				p = p->next;
-			}
-			if (p) {
-				printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
-			}
-			else {
-				cout << "没找到" << endl;
-			}
-			break;
-		case 2: {
-			p = L->next;
-			char bookName[50];
-			int flag = 0, count = 0;
-			cout << "请输入书名:";
-			cin >> bookName;
-			while (p) {
-				if (strcmp(bookName, p->data.bookName) == 0) {
-					printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
-					flag = 1;
-					count++;
-				};
-				p = p->next;
-			}
-			if (flag == 0) {
-				cout << "没找到" << endl;
-			}
-			cout << "查找长度为" << count << endl;
-			// 通过书名精确查找
-			break;
-		}
-		default:
-			cout << "请重新输入数字" << endl;
-			break;
-		}
-	}
-}
-
-void SearchBookByPrice(LNode* L) {
-	float min = 0, max = 0;
-	LNode* p = L->next;
-	LNode* waitSortList = new LNode;
-	InitHeadNode(waitSortList);
-	LNode* pw = waitSortList;
-	cout << "请输入一个最小和最大的价格:";
-	cin >> min >> max;
-	if (min > max) {
-		int temp;
-		temp=min;
-		min=max;
-		max=temp;
-	}
-	while (p) {
-		if (p->data.price <= max && p->data.price >= min) {
-			LNode *temp=new LNode;
-			temp->data=p->data;
-			pw->next=temp;
-			//pw->next = p;
-			pw = pw->next;
-		}
-		p = p->next;
-	}
-	Book t;
-	pw->next = NULL;
-	for (LNode* temp = waitSortList->next; temp->next != NULL; temp = temp->next) {
-		for (LNode* p = waitSortList->next; p->next != NULL; p = p->next) {
-			if (p->data.price < p->next->data.price) {
-				t = p->data;
-				p->data = p->next->data;
-				p->next->data = t;
-			}
-		}
-	}
-	AccessNodesData(waitSortList);
-}
-
-void SearchBookByAuthor(LNode* L) {
-	char author[50];
-	LNode* p = L->next;
-	LNode* waitSortList = new LNode;
-	InitHeadNode(waitSortList);
-	LNode* pw = waitSortList;
-	cout << "请输入一个作者名字:";
-	cin >> author;
-	while (p) {
-		if (strcmp(author, p->data.author) == 0) {
-			LNode* temp = new LNode;
-			temp->data = p->data;
-			pw->next = temp;
-			//pw->next = p;
-			pw = pw->next;
-		}
-		p = p->next;
-	}
-	Book t;
-	pw->next = NULL;
-	for (LNode* temp = waitSortList->next; temp->next != NULL; temp = temp->next) {
-		for (LNode* p = waitSortList->next; p->next != NULL; p = p->next) {
-			if (p->data.price > p->next->data.price) {
-				t = p->data;
-				p->data = p->next->data;
-				p->next->data = t;
-			}
-		}
-	}
-	AccessNodesData(waitSortList);
-}
-
-void Unit_v3() {
-	//	LNode l;	  // LNode结构体
-	LNode* p;  // p为指向LNode的指针体
-	LNode** q = &p; // q指向指针的指针
-
-	/* 初始化指针需要给入 指向指针的指针，通过指向指针的指针来改变指针的地址
-	 * 这里是通过二级指针传递
-	 */
-	InitList(q);
-
-	/*
-	 * 批量插入数据
-	 */
-	BatchInsert(p);
-	if (WriteStructToFile(p) == OK) {
-		cout << "写入数据成功" << endl;
-	}
-	if (ReadStructFromFile(p) == OK) {
-		cout << "读取数据成功" << endl;
-	}
-	AccessNodesData(p);
-
-
-}
 
 void Console() {
 	cout << "欢迎来到图书管理软件Ver1.0版本" << endl;
-
 	LNode* p;  // p为指向LNode的指针体
 	LNode** q = &p; // q指向指针的指针
 	InitList(q);
@@ -781,8 +617,7 @@ void Console() {
 			// 可以按价格范围进行查找（结果按价格降序输出）。
 			break;
 		case 6:
-			// searchbyauthor(p);
-			 SearchBookByAuthor(p);
+			SearchBookByAuthor(p);
 			// 查找某个作者出版的所有图书信息，按价格升序输出。
 			break;
 		case 7:searchbybookname(p);
@@ -790,8 +625,6 @@ void Console() {
 			break;
 		case 8:
 			// 输出所有图书信息。
-			
-			
 			orderbyPublisherAndAuthor(p);
 			orderbyAuthorAndPrice(p);
 			break;
@@ -807,6 +640,6 @@ void Console() {
 }
 
 int main() {
-	//Unit_v3();
+	//InitData();
 	Console();
 }

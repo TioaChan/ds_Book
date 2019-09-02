@@ -151,11 +151,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ds_book.cpp" />
+    <ClCompile Include="home.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="search.h" />
+    <ClInclude Include="InitData.h" />
     <ClInclude Include="sort.h" />
-    <ClInclude Include="test.h" />
+    <ClInclude Include="order.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
