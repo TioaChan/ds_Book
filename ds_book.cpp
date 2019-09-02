@@ -664,7 +664,19 @@ void Console() {
 	}
 }
 
+void Console1() {
+	cout << "欢迎来到图书管理软件Ver1.0版本" << endl;
+
+	LNode* p;  // p为指向LNode的指针体
+	LNode** q = &p; // q指向指针的指针
+	InitList(q);
+	//
+	ReadStructFromFile(p);
+	orderbyPublisherAndAuthor(p);
+}
+
+
 int main() {
 	// Unit_v3();
-	Console();
+	Console1();
 }
