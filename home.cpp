@@ -132,39 +132,6 @@ Status ListDelete(LinkList L, int i) {
 	return OK;
 }
 
-Status WriteStructToFile(LNode* L) {
-	LNode* p = L->next;
-	FILE* pf;
-	int count = 0;
-	if ((pf = (fopen(".\\a.dat", "w+"))) == 0)
-		return ERROR;
-	while (p) {
-		fprintf(pf, "%s %s %s %s %f\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
-		p = p->next;
-		count++;
-	}
-	cout << "共有" << count << "条数据" << endl;
-	fclose(pf);
-	return OK;
-}
-
-Status ReadStructFromFile(LNode* L) {
-	ClearList(L);
-	FILE* pf;
-	if ((pf = (fopen(".\\a.dat", "r"))) == 0)
-		return ERROR;
-	Book b;
-	int i = 0;
-	while (!feof(pf)) {
-		int res = fscanf(pf, "%s%s%s%s%f", b.no, b.bookName, b.author, b.publisher, &b.price);
-		if (res == -1)break;
-		ListInsert(L, ++i, b);
-		// !Debug重要性
-	}
-	fclose(pf);
-	return OK;
-}
-
 Status AddNewBook(LNode* L) {
 	float price;
 	int flag; // 检测no
