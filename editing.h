@@ -1,4 +1,7 @@
 ﻿#pragma once
+/*
+	4. 可以修改某个图书信息（书号不能改）。
+*/
 Status ChangeBookInfo(LNode* L) {
 	LNode* p = L->next;
 	char inputNo[50];

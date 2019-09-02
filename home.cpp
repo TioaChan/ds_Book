@@ -4,6 +4,7 @@
 #include<string.h>
 #include<iostream>
 #include<io.h>
+
 using namespace std;
 
 #define OK 1
@@ -59,61 +60,53 @@ Status WriteStructToFile(LNode* L);
 Status ReadStructFromFile(LNode* L);
 void Console();
 
-
-#include"order.h"
-#include"InitData.h"
-#include"search.h"
+/*
+	程序必要函数
+*/
 #include"common.h"
-#include"counting.h"
+
+/*
+	1. 图书信息包含书号、书名、作者（1个）、出版社、价格五个部分。
+	2. 图书信息用文件存储。
+*/
+#include"InitData.h"
+
+/*
+	3. 可以增加新图书。
+*/
 #include"adding.h"
+
+/*
+	4. 可以修改某个图书信息（书号不能改）
+*/
 #include"editing.h"
+
+/*
+	5. 可以删除某些图书信息（分别按书号和书名进行删除）。
+*/
 #include"deleting.h"
 
-Status ListInsert(LNode* L, int i, Book e) {
-	LNode* p = L;
-	int j = 0;
-	while (p && j < i - 1) {
-		p = p->next;
-		j++;  // 寻找i-1个结点
-	}
-	if (!p || j > i - 1) {
-		return ERROR; //i大于表长+1或者小于1
-	}
-	LNode* Node = (LNode*)malloc(sizeof(LNode));
-	//首先LNode是局部变量，在栈里，函数消亡的时候LNode也跟着消亡
-	// 所以不能LNode Node声明在函数里，然后让插入单链表中
+/*
+	6. 可以按书号或书名进行精确查找（按书名查找时，如果有多本图书，则全部查找出来，并输出其查找长度）。
+	7. 可以按价格范围进行查找（结果按价格降序输出）。
+	8. 查找某个作者出版的所有图书信息，按价格升序输出。
+	9. 可以按书名进行模糊查找。
+*/
+#include"search.h"
 
-	// 使用malloc是在堆中申请长度为 LNode的连续空间
-	// 进而申请到一个结点
-	// 这个结点系统不会自动回收，需要程序员自己进行释放
-	// 这样就可以保证结点不会被消亡
-	// 同时即将消亡的Node指针，因为及时的链接到了上一个节点指针上
-	// 因此得到了保留
+/*
+10. 输出所有图书信息。
+	* 按出版社输出所有图书，同一出版社的图书按作者输出。
+	* 按作者输出所有图书，同一作者的图书按价格升序输出。
+*/
+#include"order.h"
 
-	Node->data = e;
-	Node->next = p->next;
-	p->next = Node;
-
-	// ====================================
-	//  以下为错误代码
-	//	LNode N;
-	//	LNode *q=&N;
-	//	q->data=e;
-	//	q->next=p->next;
-	//	p->next=q;
-	//	printf("%s",p->next->data.name);
-	//	printf("%s",p->next->data.no);
-	//	printf("%f",p->next->data.price);
-	// ====================================
-	return OK;
-}
-
-Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, const char* author, const char* publisher, float price) {
-	Book book = BookFactory(no, bookName, author, publisher, price);
-	if (ListInsert(L, i, book) == OK) {
-		return OK;
-	}
-}
+/*
+11. 统计。
+	* 统计每个出版社出版的图书总数，按图书总数升序输出。
+	* 统计每个作者出版的图书总数，按图书总数降序输出。
+*/
+#include"counting.h"
 
 
 void Console() {
@@ -184,6 +177,8 @@ void Console() {
 }
 
 int main() {
+	copyright();
+
 	if (((_access("a.dat", 0)) != -1)&&(_filelength(_open("a.dat", 0x0100)) > 0))//文件存在且文件大小大于0
 	{
 		Console();
@@ -193,5 +188,4 @@ int main() {
 		InitData();
 		Console();
 	}
-
 }

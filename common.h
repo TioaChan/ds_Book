@@ -1,5 +1,10 @@
 ﻿#pragma once
 
+#include<Windows.h>
+
+/*
+	封装Book和字段
+*/
 Book BookFactory(const char* no, const char* bookName, const char* author, const char* publisher, float price) {
 	Book book;
 	strcpy(book.no, no);
@@ -38,7 +43,10 @@ Status InitList(LNode** L) {
 	return OK;
 }
 
-int ListLength(LinkList L) {// 返回L中元素个数
+/*
+	返回L中元素个数
+*/
+int ListLength(LinkList L) {
 	LinkList p;
 	p = L->next; // p指向第一个结点
 	int i = 0;
@@ -89,7 +97,7 @@ void AccessNodesData(LNode* L) {//遍历节点并打印
 	} while (p != NULL); // !! 注意是p!=NULL 而不是p->next!=NULL
 }
 
-Status WriteStructToFile(LNode* L) {
+Status WriteStructToFile(LNode* L) {//写入L到文件中
 	LNode* p = L->next;
 	FILE* pf;
 	int count = 0;
@@ -105,7 +113,7 @@ Status WriteStructToFile(LNode* L) {
 	return OK;
 }
 
-Status ReadStructFromFile(LNode* L) {
+Status ReadStructFromFile(LNode* L) {//读取文件数据到L中
 	ClearList(L);
 	FILE* pf;
 	if ((pf = (fopen(".\\a.dat", "r"))) == 0)
@@ -120,5 +128,57 @@ Status ReadStructFromFile(LNode* L) {
 	}
 	fclose(pf);
 	return OK;
+}
+
+Status ListInsert(LNode* L, int i, Book e) {
+	LNode* p = L;
+	int j = 0;
+	while (p && j < i - 1) {
+		p = p->next;
+		j++;  // 寻找i-1个结点
+	}
+	if (!p || j > i - 1) {
+		return ERROR; //i大于表长+1或者小于1
+	}
+	LNode* Node = (LNode*)malloc(sizeof(LNode));
+	//首先LNode是局部变量，在栈里，函数消亡的时候LNode也跟着消亡
+	// 所以不能LNode Node声明在函数里，然后让插入单链表中
+
+	// 使用malloc是在堆中申请长度为 LNode的连续空间
+	// 进而申请到一个结点
+	// 这个结点系统不会自动回收，需要程序员自己进行释放
+	// 这样就可以保证结点不会被消亡
+	// 同时即将消亡的Node指针，因为及时的链接到了上一个节点指针上
+	// 因此得到了保留
+
+	Node->data = e;
+	Node->next = p->next;
+	p->next = Node;
+
+	// ====================================
+	//  以下为错误代码
+	//	LNode N;
+	//	LNode *q=&N;
+	//	q->data=e;
+	//	q->next=p->next;
+	//	p->next=q;
+	//	printf("%s",p->next->data.name);
+	//	printf("%s",p->next->data.no);
+	//	printf("%f",p->next->data.price);
+	// ====================================
+	return OK;
+}
+
+Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, const char* author, const char* publisher, float price) {
+	Book book = BookFactory(no, bookName, author, publisher, price);
+	if (ListInsert(L, i, book) == OK) {
+		return OK;
+	}
+}
+
+void copyright() {
+	cout << "\n\n\n            Copyright\n" << endl;
+	Sleep(2000);
+	system("cls");
 }
 

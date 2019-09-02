@@ -1,7 +1,14 @@
+ï»¿/*
+6. å¯ä»¥æŒ‰ä¹¦å·æˆ–ä¹¦åè¿›è¡Œç²¾ç¡®æŸ¥æ‰¾ï¼ˆæŒ‰ä¹¦åæŸ¥æ‰¾æ—¶ï¼Œå¦‚æœæœ‰å¤šæœ¬å›¾ä¹¦ï¼Œåˆ™å…¨éƒ¨æŸ¥æ‰¾å‡ºæ¥ï¼Œå¹¶è¾“å‡ºå…¶æŸ¥æ‰¾é•¿åº¦ï¼‰ã€‚
+7. å¯ä»¥æŒ‰ä»·æ ¼èŒƒå›´è¿›è¡ŒæŸ¥æ‰¾ï¼ˆç»“æœæŒ‰ä»·æ ¼é™åºè¾“å‡ºï¼‰ã€‚
+8. æŸ¥æ‰¾æŸä¸ªä½œè€…å‡ºç‰ˆçš„æ‰€æœ‰å›¾ä¹¦ä¿¡æ¯ï¼ŒæŒ‰ä»·æ ¼å‡åºè¾“å‡ºã€‚
+9. å¯ä»¥æŒ‰ä¹¦åè¿›è¡Œæ¨¡ç³ŠæŸ¥æ‰¾ã€‚
+*/
+
 #pragma once
 #include"sorting.h"
 /*
-	²éÕÒ
+	æŸ¥æ‰¾
 */
 
 void SearchBookByNo(LNode* L);
@@ -11,7 +18,7 @@ void SearchBook(LNode* L) {
 	
 	int inputOption = 0;
 	while (1) {
-		cout << "ÇëÊäÈë²éÕÒĞÅÏ¢ 1.ÊéºÅ 2.ÊéÃû 3.ÍË³ö" << endl;
+		cout << "è¯·è¾“å…¥æŸ¥æ‰¾ä¿¡æ¯ 1.ä¹¦å· 2.ä¹¦å 3.é€€å‡º" << endl;
 		cin >> inputOption;
 		if (inputOption == 3) {
 			break;
@@ -27,16 +34,16 @@ void SearchBook(LNode* L) {
 			Console();
 			break;
 		default:
-			cout << "ÇëÖØĞÂÊäÈëÊı×Ö" << endl;
+			cout << "è¯·é‡æ–°è¾“å…¥æ•°å­—" << endl;
 			break;
 		}
 	}
 }
 
-void SearchBookByNo(LNode* L) {// Í¨¹ıÊéºÅ¾«È·²éÕÒ
+void SearchBookByNo(LNode* L) {// é€šè¿‡ä¹¦å·ç²¾ç¡®æŸ¥æ‰¾
 	LNode* p = L->next;
 	char inputNo[50];
-	cout << "ÇëÊäÈëÊéºÅ:";
+	cout << "è¯·è¾“å…¥ä¹¦å·:";
 	cin >> inputNo;
 	while (p) {
 		if (strcmp(inputNo, p->data.no) == 0) {
@@ -48,15 +55,15 @@ void SearchBookByNo(LNode* L) {// Í¨¹ıÊéºÅ¾«È·²éÕÒ
 		printf("%-15s|%-15s|%-15s|%-15s|%-2.0f|\n", p->data.no, p->data.bookName, p->data.author, p->data.publisher, p->data.price);
 	}
 	else {
-		cout << "Ã»ÕÒµ½" << endl;
+		cout << "æ²¡æ‰¾åˆ°" << endl;
 	}
 }
 
-void SearchBookByName(LNode* L) {// Í¨¹ıÊéÃû¾«È·²éÕÒ
+void SearchBookByName(LNode* L) {// é€šè¿‡ä¹¦åç²¾ç¡®æŸ¥æ‰¾
 	LNode* p = L->next;
 	char bookName[50];
 	int flag = 0, count = 0;
-	cout << "ÇëÊäÈëÊéÃû:";
+	cout << "è¯·è¾“å…¥ä¹¦å:";
 	cin >> bookName;
 	while (p) {
 		if (strcmp(bookName, p->data.bookName) == 0) {
@@ -67,18 +74,18 @@ void SearchBookByName(LNode* L) {// Í¨¹ıÊéÃû¾«È·²éÕÒ
 		p = p->next;
 	}
 	if (flag == 0) {
-		cout << "Ã»ÕÒµ½" << endl;
+		cout << "æ²¡æ‰¾åˆ°" << endl;
 	}
-	cout << "²éÕÒ³¤¶ÈÎª" << count << endl;
+	cout << "æŸ¥æ‰¾é•¿åº¦ä¸º" << count << endl;
 }
 
-void SearchBookByPrice(LNode* L) {
+void SearchBookByPrice(LNode* L) { //ä»·æ ¼åŒºé—´ç­›é€‰å¹¶é™åºè¾“å‡º
 	float min = 0, max = 0;
 	LNode* p = L->next;
 	LNode* waitSortList = new LNode;
 	InitHeadNode(waitSortList);
 	LNode* pw = waitSortList;
-	cout << "ÇëÊäÈëÒ»¸ö×îĞ¡ºÍ×î´óµÄ¼Û¸ñ:";
+	cout << "è¯·è¾“å…¥ä¸€ä¸ªæœ€å°å’Œæœ€å¤§çš„ä»·æ ¼:";
 	cin >> min >> max;
 	if (min > max) {
 		int temp;
@@ -110,20 +117,20 @@ void SearchBookByPrice(LNode* L) {
 	AccessNodesData(waitSortList);
 }
 
-void SearchBookByAuthor(LNode* L) {
-	printf("ÊäÈë×÷ÕßÒÔ½øĞĞ²éÕÒ£º");
+void SearchBookByAuthor(LNode* L) { //æŒ‰ä½œè€…æŸ¥æ‰¾ï¼Œä»·æ ¼å‡åº
+	printf("è¾“å…¥ä½œè€…ä»¥è¿›è¡ŒæŸ¥æ‰¾ï¼š");
 	char keywords[10];
 	scanf("%s", keywords);
 	LinkList searchresult = new LNode;
-	searchresult->next = NULL;//³õÊ¼»¯ËÑË÷½á¹ûÁ´±í
+	searchresult->next = NULL;//åˆå§‹åŒ–æœç´¢ç»“æœé“¾è¡¨
 	InitHeadNode(searchresult);
-	LNode* p1 = L->next;//Ö¸ÏòÊı¾İÔ´µÄÖ¸Õë
-	LNode* p2 = searchresult;//Ö¸Ïò½á¹û¼¯µÄÖ¸Õë
-	while (p1)//±éÀúÊı¾İÔ´
+	LNode* p1 = L->next;//æŒ‡å‘æ•°æ®æºçš„æŒ‡é’ˆ
+	LNode* p2 = searchresult;//æŒ‡å‘ç»“æœé›†çš„æŒ‡é’ˆ
+	while (p1)//éå†æ•°æ®æº
 	{
-		if (strcmp(p1->data.author, keywords) == 0) {//Èç¹û×÷ÕßÏàÍ¬
+		if (strcmp(p1->data.author, keywords) == 0) {//å¦‚æœä½œè€…ç›¸åŒ
 			LNode* q = new LNode;
-			q->data = p1->data;//Êı¾İÔ´Êı¾İ¸³¸ø½á¹û¼¯
+			q->data = p1->data;//æ•°æ®æºæ•°æ®èµ‹ç»™ç»“æœé›†
 			q->next = p2->next;
 			p2->next = q;
 		}
@@ -133,20 +140,20 @@ void SearchBookByAuthor(LNode* L) {
 	AccessNodesData(searchresult);
 }
 
-void searchbybookname(LNode* L) {
-	printf("ÊäÈëÊéÃûÒÔ½øĞĞ²éÕÒ£º");
+void searchbybookname(LNode* L) {//ä¹¦åå­—ç¬¦ä¸²åŒ¹é…
+	printf("è¾“å…¥ä¹¦åä»¥è¿›è¡ŒæŸ¥æ‰¾ï¼š");
 	char keywords[10];
 	scanf("%s", keywords);
 	LinkList searchresult = new LNode;
-	searchresult->next = NULL;//³õÊ¼»¯ËÑË÷½á¹ûÁ´±í
+	searchresult->next = NULL;//åˆå§‹åŒ–æœç´¢ç»“æœé“¾è¡¨
 	InitHeadNode(searchresult);
-	LNode* p1 = L->next;//Ö¸ÏòÊı¾İÔ´µÄÖ¸Õë
-	LNode* p2 = searchresult;//Ö¸Ïò½á¹û¼¯µÄÖ¸Õë
-	while (p1)//±éÀúÊı¾İÔ´
+	LNode* p1 = L->next;//æŒ‡å‘æ•°æ®æºçš„æŒ‡é’ˆ
+	LNode* p2 = searchresult;//æŒ‡å‘ç»“æœé›†çš„æŒ‡é’ˆ
+	while (p1)//éå†æ•°æ®æº
 	{
-		if (BF(p1->data.bookName, keywords) == 1) {//Ä£ºı²éÕÒ
+		if (BF(p1->data.bookName, keywords) == 1) {//æ¨¡ç³ŠæŸ¥æ‰¾
 			LNode* q = new LNode;
-			q->data = p1->data;//Êı¾İÔ´Êı¾İ¸³¸ø½á¹û¼¯
+			q->data = p1->data;//æ•°æ®æºæ•°æ®èµ‹ç»™ç»“æœé›†
 			q->next = p2->next;
 			p2->next = q;
 		}

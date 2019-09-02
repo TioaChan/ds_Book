@@ -1,6 +1,9 @@
 #pragma once
+/*
+≈≈–Ú∑Ω∑®
+*/
 
-int BF(char* source, char* target) {
+int BF(char* source, char* target) {//
 	int j = 0;
 	int t_len = strlen(target);
 	int s_len = strlen(source);

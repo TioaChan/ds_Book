@@ -1,4 +1,7 @@
 ﻿#pragma once
+/*
+	5. 可以删除某些图书信息（分别按书号和书名进行删除）。
+*/
 Status ListDelete(LinkList L, int i) {
 	// 在带头结点的单链表，删除第i个元素
 	LNode* p = L;

@@ -1,6 +1,8 @@
 ﻿#pragma once
 /*
-	统计
+	11. 统计。
+    * 统计每个出版社出版的图书总数，按图书总数升序输出。
+    * 统计每个作者出版的图书总数，按图书总数降序输出。
 */
 void countBookByPublisher_ASC(LNode* L);
 void countBookByAuthor_DESC(LNode* L);

@@ -1,4 +1,7 @@
 ﻿#pragma once
+/*
+	3. 可以增加新图书。
+*/
 Status AddNewBook(LNode* L) {
 	float price;
 	int flag; // 检测No

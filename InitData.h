@@ -1,44 +1,49 @@
+ï»¿/*
+1. å›¾ä¹¦ä¿¡æ¯åŒ…å«ä¹¦å·ã€ä¹¦åã€ä½œè€…ï¼ˆ1ä¸ªï¼‰ã€å‡ºç‰ˆç¤¾ã€ä»·æ ¼äº”ä¸ªéƒ¨åˆ†ã€‚
+2. å›¾ä¹¦ä¿¡æ¯ç”¨æ–‡ä»¶å­˜å‚¨ã€‚
+*/
+
 ///
-///³õÊ¼»¯Êı¾İ²¢Ğ´ÈëÎÄ¼ş
+///åˆå§‹åŒ–æ•°æ®å¹¶å†™å…¥æ–‡ä»¶
 ///
 
 void BatchInsert(LNode* p) {
-	printf("==================================³õÊ¼»¯Êı¾İ=====================================\n");
-	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "ÕÅÈı", "Çå»ª³ö°æÉç", 520.0));
-	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "ÀîËÄ", "¹¤Òµ³ö°æÉç", 320.0));
-	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "ÍõÎå", "±±´ó³ö°æÉç", 700.0));
-	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "ÕÔÁù", "¸ßµÈ½ÌÓı³ö°æÉç", 660.0));
-	JudgeResponseCode(SuperListInsert(p, 5, "005", "¼ÆËã»úÍøÂç", "Ğ¡Ã÷", "A³ö°æÉç", 780.0));
-	JudgeResponseCode(SuperListInsert(p, 6, "006", "Êı¾İ½á¹¹", "Ğ¡Ã÷", "A³ö°æÉç", 680.0));
-	JudgeResponseCode(SuperListInsert(p, 7, "007", "¼ÆËã»ú²Ù×÷ÏµÍ³", "Ğ¡ºì", "B³ö°æÉç", 220.0));
-	JudgeResponseCode(SuperListInsert(p, 8, "008", "Êı¾İ½á¹¹", "Ğ¡À¶", "Ö£´ó³ö°æÉç", 140.0));
-	JudgeResponseCode(SuperListInsert(p, 9, "009", "C++´ÓÈëÃÅµ½·ÅÆú", "Ğ¡ÖÇ", "ºÓÄÏ¹¤³Ì³ö°æÉç", 380.0));
-	JudgeResponseCode(SuperListInsert(p, 10, "010", "C++´ÓÈëÃÅµ½·ÅÆú", "Ğ¡·¼", "ºÓÄÏ¹¤³Ì³ö°æÉç", 180.0));
-	JudgeResponseCode(SuperListInsert(p, 11, "011", "C++´ÓÈëÃÅµ½·ÅÆú", "Ğ¡Àæ", "ºÓÄÏ¹¤³Ì³ö°æÉç", 180.0));
-	JudgeResponseCode(SuperListInsert(p, 12, "012", "°²×¿´ÓÈëÃÅµ½·ÅÆú", "Ğ¡Ã÷", "A³ö°æÉç", 180.0));
-	printf("µ±Ç°Ò»¹²ÓĞ%d¸öÊı¾İ\n", ListLength(p));
-	printf("==================================³õÊ¼»¯Êı¾İ=====================================\n\n");
+	printf("==================================åˆå§‹åŒ–æ•°æ®=====================================\n");
+	JudgeResponseCode(SuperListInsert(p, 1, "001", "JAVA", "å¼ ä¸‰", "æ¸…åå‡ºç‰ˆç¤¾", 520.0));
+	JudgeResponseCode(SuperListInsert(p, 2, "002", "VUE.JS", "æå››", "å·¥ä¸šå‡ºç‰ˆç¤¾", 320.0));
+	JudgeResponseCode(SuperListInsert(p, 3, "003", "C++", "ç‹äº”", "åŒ—å¤§å‡ºç‰ˆç¤¾", 700.0));
+	JudgeResponseCode(SuperListInsert(p, 4, "004", "Asp.Net", "èµµå…­", "é«˜ç­‰æ•™è‚²å‡ºç‰ˆç¤¾", 660.0));
+	JudgeResponseCode(SuperListInsert(p, 5, "005", "è®¡ç®—æœºç½‘ç»œ", "å°æ˜", "Aå‡ºç‰ˆç¤¾", 780.0));
+	JudgeResponseCode(SuperListInsert(p, 6, "006", "æ•°æ®ç»“æ„", "å°æ˜", "Aå‡ºç‰ˆç¤¾", 680.0));
+	JudgeResponseCode(SuperListInsert(p, 7, "007", "è®¡ç®—æœºæ“ä½œç³»ç»Ÿ", "å°çº¢", "Bå‡ºç‰ˆç¤¾", 220.0));
+	JudgeResponseCode(SuperListInsert(p, 8, "008", "æ•°æ®ç»“æ„", "å°è“", "éƒ‘å¤§å‡ºç‰ˆç¤¾", 140.0));
+	JudgeResponseCode(SuperListInsert(p, 9, "009", "C++ä»å…¥é—¨åˆ°æ”¾å¼ƒ", "å°æ™º", "æ²³å—å·¥ç¨‹å‡ºç‰ˆç¤¾", 380.0));
+	JudgeResponseCode(SuperListInsert(p, 10, "010", "C++ä»å…¥é—¨åˆ°æ”¾å¼ƒ", "å°èŠ³", "æ²³å—å·¥ç¨‹å‡ºç‰ˆç¤¾", 180.0));
+	JudgeResponseCode(SuperListInsert(p, 11, "011", "C++ä»å…¥é—¨åˆ°æ”¾å¼ƒ", "å°æ¢¨", "æ²³å—å·¥ç¨‹å‡ºç‰ˆç¤¾", 180.0));
+	JudgeResponseCode(SuperListInsert(p, 12, "012", "å®‰å“ä»å…¥é—¨åˆ°æ”¾å¼ƒ", "å°æ˜", "Aå‡ºç‰ˆç¤¾", 180.0));
+	printf("å½“å‰ä¸€å…±æœ‰%dä¸ªæ•°æ®\n", ListLength(p));
+	printf("==================================åˆå§‹åŒ–æ•°æ®=====================================\n\n");
 }
 
 void InitData() {
-	LNode* p;  // pÎªÖ¸ÏòLNodeµÄÖ¸ÕëÌå
-	LNode** q = &p; // qÖ¸ÏòÖ¸ÕëµÄÖ¸Õë
+	LNode* p;  // pä¸ºæŒ‡å‘LNodeçš„æŒ‡é’ˆä½“
+	LNode** q = &p; // qæŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆ
 
-	/* ³õÊ¼»¯Ö¸ÕëĞèÒª¸øÈë Ö¸ÏòÖ¸ÕëµÄÖ¸Õë£¬Í¨¹ıÖ¸ÏòÖ¸ÕëµÄÖ¸ÕëÀ´¸Ä±äÖ¸ÕëµÄµØÖ·
-	 * ÕâÀïÊÇÍ¨¹ı¶ş¼¶Ö¸Õë´«µİ
+	/* åˆå§‹åŒ–æŒ‡é’ˆéœ€è¦ç»™å…¥ æŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆï¼Œé€šè¿‡æŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆæ¥æ”¹å˜æŒ‡é’ˆçš„åœ°å€
+	 * è¿™é‡Œæ˜¯é€šè¿‡äºŒçº§æŒ‡é’ˆä¼ é€’
 	 */
 
 	InitList(q);
 
 	/*
-	 * ÅúÁ¿²åÈëÊı¾İ
+	 * æ‰¹é‡æ’å…¥æ•°æ®
 	 */
 	BatchInsert(p);
 	if (WriteStructToFile(p) == OK) {
-		cout << "Ğ´ÈëÊı¾İ³É¹¦" << endl;
+		cout << "å†™å…¥æ•°æ®æˆåŠŸ" << endl;
 	}
 	if (ReadStructFromFile(p) == OK) {
-		cout << "¶ÁÈ¡Êı¾İ³É¹¦" << endl;
+		cout << "è¯»å–æ•°æ®æˆåŠŸ" << endl;
 	}
 	AccessNodesData(p);
 }

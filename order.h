@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/*
+	10. 输出所有图书信息。
+    * 按出版社输出所有图书，同一出版社的图书按作者输出。
+	* 按作者输出所有图书，同一作者的图书按价格升序输出。
+*/
+
+#pragma once
 #include"sorting.h"
 
 void orderbyPublisherAndAuthor(LNode* L) {
