@@ -3,6 +3,7 @@
 	3. 可以增加新图书。
 */
 Status AddNewBook(LNode* L) {
+	system("cls");
 	float price;
 	int flag; // 检测No
 	LNode* p = L->next;
@@ -37,5 +38,7 @@ Status AddNewBook(LNode* L) {
 	q->next = NULL;
 	p->next = q;
 	WriteStructToFile(L);
+	Sleep(1000);
+	system("cls");
 	return OK;
 }

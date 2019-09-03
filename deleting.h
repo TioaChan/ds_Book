@@ -26,9 +26,10 @@ void DeleteBookInfo(LNode* L) {
 	LNode* p;
 	LNode* pre = new LNode;
 	while (1) {
-		cout << "请输入需要删除的信息 1.书号 2.书名 3.退出" << endl;
+		cout << "请输入需要删除的信息 1.书号 2.书名 3.返回上一级" << endl;
 		cin >> intOption;
 		if (intOption == 3) {
+			system("cls");
 			break;
 		}
 		switch (intOption) {

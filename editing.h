@@ -6,8 +6,11 @@ Status ChangeBookInfo(LNode* L) {
 	LNode* p = L->next;
 	char inputNo[50];
 	int inputOption = 0, flag = 0;
-	cout << "请输入需要修改的书号" << endl;
+	cout << "\n请输入需要修改的书号,返回上一级请键入exit" << endl;
 	cin >> inputNo;
+	if (strcmp("exit", inputNo) == 0) {
+		Console();
+	}
 	while (p) {
 		if (strcmp(p->data.no, inputNo) == 0) {
 			break;

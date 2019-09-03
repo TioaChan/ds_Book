@@ -8,11 +8,13 @@ void countBookByPublisher_ASC(LNode* L);
 void countBookByAuthor_DESC(LNode* L);
 
 void Statistics(LNode* L) {// 统计
+	system("cls");
 	int op;
 	while (1) {
-		cout << "1.统计出版社图书出版总数，按升序输出\n2.统计作者出版图书总数，按降序输出\n3.退出" << endl;
+		cout << "\n1.统计出版社图书出版总数，按升序输出\n2.统计作者出版图书总数，按降序输出\n3.返回上一级" << endl;
 		cin >> op;
 		if (op == 3) {
+			system("cls");
 			break;
 		}
 		switch (op) {
@@ -22,7 +24,7 @@ void Statistics(LNode* L) {// 统计
 		case 2: 
 			countBookByAuthor_DESC(L);
 			break;
-		case 3:Console();
+		case 3: Console();
 			break;
 		default:
 			cout << "请重新输入数字" << endl;
@@ -33,6 +35,7 @@ void Statistics(LNode* L) {// 统计
 
 
 void countBookByPublisher_ASC(LNode* L) {//统计每个出版社出版的图书总数，按图书总数升序输出。
+	printf("\n统计信息如下：\n\n");
 	PNode* waitSort = new PNode;
 	LNode* p = L->next;
 	PNode* pw = waitSort;
@@ -90,6 +93,7 @@ void countBookByPublisher_ASC(LNode* L) {//统计每个出版社出版的图书�
 }
 
 void countBookByAuthor_DESC(LNode* L) {//统计每个出版社出版的图书总数，按图书总数升序输出。
+	printf("\n统计信息如下：\n\n");
 	ANode* waitSort = new ANode;
 	LNode* p = L->next;
 	ANode* pw = waitSort;

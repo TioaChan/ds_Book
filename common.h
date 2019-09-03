@@ -34,12 +34,15 @@ Status InitHeadNode(LNode* L) {
 Status InitList(LNode** L) {
 	*L = (LNode*)malloc(sizeof(LNode));
 	if (*L == NULL) {
-		printf("申请空间失败");
+		printf("申请空间失败\n\n尝试重新申请中...");
+		InitList(L);
 	}
 	if (InitHeadNode(*L) == OK) {
 		cout << "成功初始化头结点" << endl << endl;
 	}
 	(*L)->next = NULL;
+	Sleep(1000);
+	system("cls");
 	return OK;
 }
 
@@ -108,7 +111,7 @@ Status WriteStructToFile(LNode* L) {//写入L到文件中
 		p = p->next;
 		count++;
 	}
-	cout << "共有" << count << "条数据" << endl;
+	cout << "目前数据源共有" << count << "条数据\n" << endl;
 	fclose(pf);
 	return OK;
 }
@@ -178,7 +181,8 @@ Status SuperListInsert(LNode* L, int i, const char* no, const char* bookName, co
 
 void copyright() {
 	cout << "\n\n\n            Copyright\n" << endl;
-	Sleep(2000);
+	cout << "\n\n\n      Welcome to visit this program's repo at github.com/TioaTyan/ds_Book \n" << endl;
+	Sleep(3000);
 	system("cls");
 }
 

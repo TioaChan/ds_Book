@@ -31,6 +31,7 @@ void orderbyPublisherAndAuthor(LNode* L) {
 }
 
 void orderbyAuthorAndPrice(LNode* L) {
+	printf("\n");
 	LinkList searchresult = new LNode;
 	searchresult->next = NULL;//初始化搜索结果链表
 	InitHeadNode(searchresult);
@@ -53,13 +54,14 @@ void orderbyAuthorAndPrice(LNode* L) {
 
 
 void order_menu(LNode* L) {
+	
 	int input = 0;
-	cout << "请选择输入图书信息的方法：\n1.按出版社输出所有图书，同一出版社的图书按作者输出。\n2.按作者输出所有图书，同一作者的图书按价格升序输出。\n3.退出" << endl;
+	cout << "\n请选择输出图书信息的方法：\n1.按出版社输出所有图书，同一出版社的图书按作者输出。\n2.按作者输出所有图书，同一作者的图书按价格升序输出。\n3.返回上一级" << endl;
 	cin >> input;
 	switch (input)
 	{
-		case 1:cout << "即将按出版社输出所有图书，同一出版社的图书按作者输出。" << endl; orderbyPublisherAndAuthor(L); break;
-		case 2:cout << "即将按作者输出所有图书，同一作者的图书按价格升序输出。" << endl; orderbyAuthorAndPrice(L); break;
+		case 1:system("cls"); cout << "即将按出版社输出所有图书，同一出版社的图书按作者输出。" << endl; orderbyPublisherAndAuthor(L); break;
+		case 2:system("cls"); cout << "即将按作者输出所有图书，同一作者的图书按价格升序输出。" << endl; orderbyAuthorAndPrice(L); break;
 		case 3:Console(); break;
 		default:Console();break;
 	}

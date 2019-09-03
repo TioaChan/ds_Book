@@ -18,9 +18,10 @@ void SearchBook(LNode* L) {
 	
 	int inputOption = 0;
 	while (1) {
-		cout << "请输入查找信息 1.书号 2.书名 3.退出" << endl;
+		cout << "\n请选择要查找的类型 \n1.根据书号查找 \n2.根据书名查找 \n3.返回上一级" << endl;
 		cin >> inputOption;
 		if (inputOption == 3) {
+			system("cls");
 			break;
 		}
 		switch (inputOption) {
@@ -31,7 +32,6 @@ void SearchBook(LNode* L) {
 			SearchBookByName(L);
 			break;
 		case 3:
-			Console();
 			break;
 		default:
 			cout << "请重新输入数字" << endl;
@@ -85,7 +85,7 @@ void SearchBookByPrice(LNode* L) { //价格区间筛选并降序输出
 	LNode* waitSortList = new LNode;
 	InitHeadNode(waitSortList);
 	LNode* pw = waitSortList;
-	cout << "请输入一个最小和最大的价格:";
+	cout << "请输入一个最小和最大的价格,以空格分隔:";
 	cin >> min >> max;
 	if (min > max) {
 		int temp;

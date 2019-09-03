@@ -110,14 +110,14 @@ void Console();
 
 
 void Console() {
-	cout << "欢迎来到图书管理软件Ver1.0版本" << endl;
 	LNode* p;  // p为指向LNode的指针体
 	LNode** q = &p; // q指向指针的指针
 	InitList(q);
 	ReadStructFromFile(p);
 	while (1) {
 		int input = 0;
-		cout << "1.增加图书" <<
+		cout << "\n欢迎使用图书管理软件\n" << endl;
+		cout << "请输入序号选择要进行的操作：\n1.增加图书" <<
 			endl << "2.修改图书信息" <<
 			endl << "3.删除指定图书" <<
 			endl << "4.查询图书信息" <<//
@@ -125,7 +125,8 @@ void Console() {
 			endl << "6.查找某个作者出版的所有信息，按价格升序输出 " <<//
 			endl << "7.书名模糊查找" <<//
 			endl << "8 输出图书所有信息" <<
-			endl << "9.统计" << endl << endl;
+			endl << "9.统计" << endl;
+			printf("\n\n请输入序号：");
 		cin >> input;
 		switch (input) {
 		case 1:
