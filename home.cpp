@@ -171,7 +171,7 @@ void Console() {
 			Statistics(p);
 			break;
 		default:
-			cout << "输入错误，轻重新输入" << endl;
+			cout << "输入错误，请重新输入" << endl;
 			Console();
 			break;
 		}
