@@ -110,6 +110,7 @@ void Console();
 
 
 void Console() {
+	system("cls");
 	cout << "欢迎来到图书管理软件Ver1.0版本" << endl;
 	LNode* p;  // p为指向LNode的指针体
 	LNode** q = &p; // q指向指针的指针
@@ -162,8 +163,9 @@ void Console() {
 			break;
 		case 8:
 			// 输出所有图书信息。
-			orderbyPublisherAndAuthor(p);
-			orderbyAuthorAndPrice(p);
+			//orderbyPublisherAndAuthor(p);
+			//orderbyAuthorAndPrice(p);
+			order_menu(p);
 			break;
 		case 9:
 			Statistics(p);
