@@ -38,7 +38,7 @@
 
 ```C
  ds_book
-    |-- data
+	|-- data
 		|-- a.dat   /*备份的数据源*/
 	|-- InitData.h  /*图书结构体、文件存储*/
 	|-- README.md	/*仓库自述*/
