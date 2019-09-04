@@ -39,20 +39,20 @@
 ```C
     ds_book
 	|-- data
-	    |-- a.dat   /*备份的数据源*/
-	|-- InitData.h  /*图书结构体、文件存储*/
-	|-- README.md	/*仓库自述*/
-	|-- a.dat       /*使用的数据源*/
-	|-- adding.h    /*增加新图书*/
-	|-- common.h    /*程序必要函数*/
-	|-- counting.h  /*统计*/
-	|-- deleting.h  /*删除*/
-	|-- ds_book.sln /*使用Visual Studio时产生的必要工程文件*/
-	|-- ds_book.vcxproj/*使用Visual Studio时产生的必要工程文件*/
-	|-- ds_book.vcxproj.filters/*使用Visual Studio时产生的必要工程文件*/
-	|-- editing.h   /*修改*/
-	|-- home.cpp    /*程序入口*/
-	|-- order.h     /*输出所有图书信息*/
-	|-- search.h    /*搜索：按书名、书号、价格范围、作者，书名匹配查找*/
-	|-- sorting.h   /*图书结构体、文件存储*/
+	    |-- a.dat			/*备份的数据源*/
+	|-- InitData.h			/*图书结构体、文件存储*/
+	|-- README.md			/*仓库自述*/
+	|-- a.dat			/*使用的数据源*/
+	|-- adding.h			/*增加新图书*/
+	|-- common.h			/*程序必要函数*/
+	|-- counting.h			/*统计*/
+	|-- deleting.h			/*删除*/
+	|-- ds_book.sln			/*使用Visual Studio时产生的必要工程文件*/
+	|-- ds_book.vcxproj		/*使用Visual Studio时产生的必要工程文件*/
+	|-- ds_book.vcxproj.filters	/*使用Visual Studio时产生的必要工程文件*/
+	|-- editing.h			/*修改*/
+	|-- home.cpp			/*程序入口*/
+	|-- order.h			/*输出所有图书信息*/
+	|-- search.h			/*搜索：按书名、书号、价格范围、作者，书名匹配查找*/
+	|-- sorting.h			/*图书结构体、文件存储*/
 ```
